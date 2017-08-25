@@ -1,0 +1,28 @@
+registration:
+  valid_email: 电子邮箱地址有效
+  invalid_email: 请输入有效的电子邮箱地址
+  password_match: 密码匹配
+  password_not_match: 密码不匹配
+  empty_field: 请输入信息
+  empty_selection: 请选择一个值
+
+# bing map translation
+bingmap: 
+  consult_us: 请询问我们价格
+  sale: 销售中
+  close: 关闭
+  view: 查看
+
+# bar chart translation
+barchart:
+  title_rent_income: 年租金收入
+  title_property_value: 房产价值预估
+  title_total_return: 总投资回报
+  title_annual_return: 平均年投资回报
+  title_out_of_pocket: 购房出资
+  title_total_loan: 贷款总额
+  title_total_loan_interest: 还息总额
+  title_misc_fee_total: 杂费总额
+
+stamp_duty:
+  tooltips: 的全额印花税是

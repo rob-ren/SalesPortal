@@ -1,0 +1,276 @@
+{% extends 'AppBundle:Default:common/common.html.twig' %}
+{% block header %}
+    {% include'AppBundle:Default:common/header.html.twig' with {'user' :user} %}
+{% endblock %}
+{% block title %}
+    <title>{% trans %}explore.explore{% endtrans %}</title>
+{% endblock %}
+{% block body %}
+    <!-- Content -->
+    <div id="wrapper">
+        <div id="mapView">
+            <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> {% trans %}
+                explore.loading_map{% endtrans %}...
+            </div>
+        </div>
+        <div id="content">
+            <div class="filter">
+                <h1 class="osLight">{% trans %}explore.filter_your_results{% endtrans %}</h1>
+                <a href="#" class="handleFilter"><span class="icon-equalizer"></span></a>
+                <div class="clearfix"></div>
+                <form class="filterForm" action="{{ url('app_explore',{'page':1}) }}" method="get">
+                    <div class="hidden">
+                        <input id="hidden_state" name="state" value="{{ app.request.get('state') }}">
+                        <input id="hidden_type" name="type" value="{{ app.request.get('type') }}">
+                        <input id="hidden_min_price" class="form_min_price" name="min_price"
+                               value="{{ app.request.get('min_price') }}">
+                        <input id="hidden_max_price" class="form_max_price" name="max_price"
+                               value="{{ app.request.get('max_price') }}">
+                        <input id="hidden_keyword" class="form_keyword" name="keyword"
+                               value="{{ app.request.get('keyword') }}">
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 formItem">
+                            <div class="formField">
+                                <label>{% trans %}explore.states{% endtrans %}</label>
+                                <a href="#" data-toggle="dropdown"
+                                   class="btn btn-gray dropdown-btn dropdown-toggle propTypeSelect">
+                                    <span id="state_query" class="dropdown-label">All</span>
+                                    <span class="fa fa-angle-down dsArrow"></span>
+                                </a>
+                                <ul id="state_dropdown" class="dropdown-menu dropdown-select full" role="menu">
+                                    <li class="active">
+                                        <input type="radio" checked="checked">
+                                        <a>All</a>
+                                    </li>
+                                    {% for state in states %}
+                                        <li>
+                                            <input type="radio" value="{{ state }}">
+                                            <a class="state_submit">{{ state }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 formItem">
+                            <div class="formField">
+                                <label>{% trans %}explore.property_type{% endtrans %}</label>
+                                <a href="#" data-toggle="dropdown"
+                                   class="btn btn-gray dropdown-btn dropdown-toggle propTypeSelect">
+                                    <span id="type_query" class="dropdown-label">All</span>
+                                    <span class="fa fa-angle-down dsArrow"></span>
+                                </a>
+                                <ul id="type_dropdown" class="dropdown-menu dropdown-select full" role="menu">
+                                    <li class="active">
+                                        <input type="radio" checked="checked">
+                                        <a>All</a>
+                                    </li>
+                                    {% for type in types %}
+                                        <li>
+                                            <input type="radio" value="{{ type }}">
+                                            <a>{{ type }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 formItem">
+                            <div class="formField">
+                                <label>{% trans %}explore.price_range{% endtrans %}</label>
+                                <div class="slider priceSlider">
+                                    <div class="sliderTooltip">
+                                        <div class="stArrow"></div>
+                                        <div class="stLabel"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 formItem pb20">
+                            <div class="formField">
+                                <button type="submit" class="btn btn-green search-btn">
+                                    <i class="fa fa-search"></i>
+                                    {% trans %}explore.search{% endtrans %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="resultsList">
+                {% if projects|length <1 %}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 formItem">
+                            <h3>{% trans %}explore.sorry_msg{% endtrans %}</h3>
+                            <h3>{% trans %}explore.suggestions{% endtrans %}</h3>
+                            <label>{% trans %}explore.suggestions_1{% endtrans %}</label><br/>
+                            <label>{% trans %}explore.suggestions_2{% endtrans %}</label> <br/>
+                            <label style="font-size: 15px">{% trans %}explore.interest_project{% endtrans %}</label>
+                            <br/>
+                            <div class="item active">
+                                {% for recent_project in recent_projects %}
+                                    <div class="col-xs-12">
+                                        <a href="{{ path('app_single',{'project_id':recent_project["id"]}) }}"
+                                           class="propWidget-2">
+                                            <div data-linkto="{{ recent_project["id"] }}" class="card">
+                                                <div class="figure">
+                                                    <img src="../{{ recent_project["front_image"] }}" alt="image">
+                                                    <div class="figCaption">
+                                                        {% if recent_project["min_price"] <=1 %}
+                                                            <div>{% trans %}explore.consult_us_price{% endtrans %}</div>
+                                                        {% else %}
+                                                            <div>${{ recent_project["min_price"]|number_format }}+
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="figView">
+                                                        <span class="icon-eye"></span>
+                                                    </div>
+                                                    <div class="figType">{% trans %}explore.on_sale{% endtrans %}</div>
+                                                </div>
+                                                <h2>{{ recent_project["title"] }}</h2>
+                                                <div class="cardAddress">
+                                                    <span class="icon-pointer"></span> {{ recent_project["address"] }}
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        <label class="explore-result-num">
+                            {% trans %}explore.total{% endtrans %} <span>{{ total_result }}</span>&nbsp;{% trans %}
+                            explore.results{% endtrans %}
+                        </label>
+                        <ul class="pagination">
+                            <li {{ page == 1 ? 'class="disabled"' }}><a
+                                        href="{{ path('app_explore', {'page':  1 ,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}">
+                                    <span class="fa fa-fast-backward"></span></a></li>
+                            {# `«` arrow #}
+                            <li {{ page == 1 ? 'class="disabled"' }}><a
+                                        href="{{ path('app_explore', {'page': page-1 < 1 ? 1 : page-1 ,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}"><span
+                                            class="fa fa-step-backward"></span></a>
+                            </li> {# Render each page number #}
+                            {% if page==1 %}
+                                {% if max_pages<= 4 %}
+                                    {% for i in page..max_pages %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')} ) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for i in page..page +3 %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')} ) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% elseif page == max_pages %}
+                                {% if max_pages<= 4 %}
+                                    {% for i in max_pages-page+1..max_pages %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')} ) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for i in page-3..page %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% elseif page == max_pages-1 %}
+                                {% if max_pages<= 4 %}
+                                    {% for i in max_pages-page..max_pages %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')} ) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for i in page-2..page+1 %}
+                                        <li {{ page == i ? 'class="active"' }}><a
+                                                    href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% else %}
+                                {% for i in page-1..page+2 %}
+                                    <li {{ page == i ? 'class="active"' }}><a
+                                                href="{{ path('app_explore', {'page': i,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            {# `»` arrow #}
+                            <li {{ page == max_pages ? 'class="disabled"' }}><a
+                                        href="{{ path('app_explore', {'page': page+1<= max_pages ? page+1 : page,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}"><span
+                                            class="fa fa-step-forward"></span></a>
+                            </li>
+                            <li {{ page == max_pages ? 'class="disabled"' }}><a
+                                        href="{{ path('app_explore', {'page': max_pages,'keyword':app.request.get('keyword'),'country':app.request.get('country'),'state':app.request.get('state'),'location':app.request.get('location'),'type':app.request.get('type'),'min_price':app.request.get('min_price'),'max_price':app.request.get('max_price'),'year':app.request.get('year'),'season':app.request.get('season')}) }}">
+                                    <span class="fa fa-fast-forward"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        {% for i in 0..projects|length-1 %}
+                            <div class="visible-xs visible-sm visible-lg visible-md">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 formItem">
+                                    <a href="{{ path('app_single',{'project_id':projects[i]["id"]}) }}" class="card">
+                                        <div class="figure">
+                                            <img src="../{{ projects[i]["front_image"] }}" alt="image">
+                                            <div class="figCaption">
+                                                {% if projects[i]["min_price"] <=1 %}
+                                                    <div>{% trans %}explore.consult_us_price{% endtrans %}</div>
+                                                {% else %}
+                                                    <div>${{ projects[i]["min_price"]|number_format }}+</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="figView">
+                                                <span class="icon-eye"></span>
+                                            </div>
+                                            <div class="figType">{% trans %}explore.on_sale{% endtrans %}</div>
+                                        </div>
+                                        <h2>{{ projects[i]["title"] }}</h2>
+                                        <div class="cardAddress">
+                                            <span class="icon-pointer"></span>{{ projects[i]["address"] }}
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+{% endblock %} {% block javascripts %}
+    <script type="text/javascript">
+        var projects ={{ projects|json_encode|raw }};
+        var locations ={{ location|json_encode|raw }};
+    </script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        document.getElementById('state_query').innerHTML = document.getElementById('hidden_state').value ? document.getElementById('hidden_state').value : "All";
+        document.getElementById('type_query').innerHTML = document.getElementById('hidden_type').value ? document.getElementById('hidden_type').value : "All";
+        document.getElementById('search_keyword').value = document.getElementById('hidden_keyword').value ? document.getElementById('hidden_keyword').value : "{% trans %}header.search_for{% endtrans %}";
+        document.getElementById("search_btn").onclick = function () {
+            var keyword = document.getElementById('search_keyword').value;
+            document.getElementById("search_btn").href = "/explore/1?keyword=" + keyword;
+        };
+    </script>
+    <script type="text/javascript" src="{{ asset('js/infobox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.tagsinput.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app-explore.js') }}"></script>
+{% endblock %}

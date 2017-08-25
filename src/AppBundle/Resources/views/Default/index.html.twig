@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>IPX | Home</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/simple-line-icons.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fullscreen-slider.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}"/>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="notransition no-hidden">
+
+<!-- Hero -->
+
+<div id="hero-container">
+    <ul class="cb-slideshow">
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+    <div class="home-header">
+        <div class="home-logo osLight"><img src="../images/ipx-logo.png"></div>
+        <a href="#" class="home-navHandler visible-xs"><span class="fa fa-bars"></span></a>
+        <div class="home-nav">
+            <ul>
+                {% if user is defined and user !=null %}
+                    <li><a href="{{ path('app_profile') }}">{% trans %}
+                            homepage.welcome_back{% endtrans %} {{ user['first_name'] }}</a></li>
+                    {% if user['user_type']== constant('DatabaseBundle\\Enum\\AccountType::admin') %}
+                        <li><a href="add" class="btn btn-green">{% trans %}homepage.list_property{% endtrans %}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="#" data-toggle="modal" data-target="#signup">{% trans %}
+                            homepage.sign_up{% endtrans %}</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#signin">{% trans %}
+                            homepage.sign_in{% endtrans %}</a></li>
+                    <li><a href="#" class="btn btn-green">{% trans %}homepage.list_property{% endtrans %}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="home-caption">
+        <div class="home-title">{% trans %}homepage.slogan{% endtrans %}</div>
+        <div class="home-subtitle">{% trans %}homepage.sub_slogan{% endtrans %}</div>
+    </div>
+    <div class="search-panel">
+        <form action="{{ url('app_explore',{'page':1}) }}" class="form-inline" role="form">
+            <div class="hidden">
+                <input id="hidden_state" name="state">
+                <input id="hidden_type" name="type">
+            </div>
+            <div class="form-group">
+                <a href="#" data-toggle="dropdown" class="btn btn-gray dropdown-btn dropdown-toggle propTypeSelect">
+                    <span id="state_query" class="dropdown-label">{% trans %}
+                        homepage.australia_state{% endtrans %}</span>
+                    <span class="fa fa-angle-down dsArrow"></span>
+                </a>
+                <ul id="state_dropdown" class="dropdown-menu dropdown-select full" role="menu">
+                    <li class="active"><input type="radio" checked="checked"><a href="#">All</a></li>
+                    <li><input type="radio" value="VIC"><a class="state_submit">VIC</a></li>
+                    <li><input type="radio" value="NSW"><a class="state_submit">NSW</a></li>
+                    <li><input type="radio" value="QLD"><a class="state_submit">QLD</a></li>
+                    <li><input type="radio" value="ACT"><a class="state_submit">ACT</a></li>
+                    <li><input type="radio" value="WA"><a class="state_submit">WA</a></li>
+                    <li><input type="radio" value="SA"><a class="state_submit">SA</a></li>
+                    <li><input type="radio" value="NT"><a class="state_submit">NT</a></li>
+                    <li><input type="radio" value="TAS"><a class="state_submit">TAS</a></li>
+                </ul>
+            </div>
+            <div class="form-group hidden-xs adv">
+                <a href="#" data-toggle="dropdown" class="btn btn-gray dropdown-btn dropdown-toggle propTypeSelect">
+                    <span id="type_query" class="dropdown-label">{% trans %}homepage.project_type{% endtrans %}</span>
+                    <span class="fa fa-angle-down dsArrow"></span>
+                </a>
+                <ul id="type_dropdown" class="dropdown-menu dropdown-select full" role="menu">
+                    <li class="active"><input type="radio" checked="checked"><a>All</a></li>
+                    <li><input type="radio" value="Apartment"><a>Apartment</a></li>
+                    <li><input type="radio" value="Townhouse"><a>Townhouse</a></li>
+                    <li><input type="radio" value="House and Land"><a>House and Land</a></li>
+                    <li><input type="radio" value="Land"><a>Land</a></li>
+                    <li><input type="radio" value="Estate"><a>Estate</a></li>
+                    <li><input type="radio" value="Others"><a>Others</a></li>
+                </ul>
+            </div>
+            <div class="form-group hidden-xs adv">
+                <div class="input-group">
+                    <div class="input-group-addon">$</div>
+                    <input name="min_price" class="form-control price" type="text"
+                           placeholder="{% trans %}homepage.from{% endtrans %}">
+                </div>
+            </div>
+            <div class="form-group hidden-xs adv">
+                <div class="input-group">
+                    <div class="input-group-addon">$</div>
+                    <input name="max_price" class="form-control price" type="text"
+                           placeholder="{% trans %}homepage.to{% endtrans %}">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-green">{% trans %}homepage.search{% endtrans %}</button>
+                <a href="#" class="btn btn-o btn-white pull-right visible-xs" id="advanced">
+                    {% trans %}homepage.advanced_search{% endtrans %}
+                    <span class="fa fa-angle-up"></span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="highlight">
+    <div class="h-title osLight">{% trans %}homepage.wrap{% endtrans %}</div>
+</div>
+
+<!-- Content -->
+
+<div class="home-wrapper">
+    <div class="home-content">
+        <h2 class="osLight">{% trans %}homepage.our_services{% endtrans %}</h2>
+        <div class="row pb40">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 s-menu-item">
+                <a href="#">
+                    <span class="icon-pointer s-icon"></span>
+                    <div class="s-content">
+                        <h2 class="s-main osLight">{% trans %}homepage.icon_1{% endtrans %}</h2>
+                        <h3 class="s-sub osLight">{% trans %}homepage.icon_sub_1{% endtrans %}</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 s-menu-item">
+                <a href="#">
+                    <span class="icon-users s-icon"></span>
+                    <div class="s-content">
+                        <h2 class="s-main osLight">{% trans %}homepage.icon_2{% endtrans %}</h2>
+                        <h3 class="s-sub osLight">{% trans %}homepage.icon_sub_2{% endtrans %}</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 s-menu-item">
+                <a href="#">
+                    <span class="icon-home s-icon"></span>
+                    <div class="s-content">
+                        <h2 class="s-main osLight">{% trans %}homepage.icon_3{% endtrans %}</h2>
+                        <h3 class="s-sub osLight">{% trans %}homepage.icon_sub_3{% endtrans %}</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 s-menu-item">
+                <a href="#">
+                    <span class="icon-cloud-upload s-icon"></span>
+                    <div class="s-content">
+                        <h2 class="s-main osLight">{% trans %}homepage.icon_4{% endtrans %}</h2>
+                        <h3 class="s-sub osLight">{% trans %}homepage.icon_sub_4{% endtrans %}</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <h2 class="osLight">{% trans %}homepage.our_agents{% endtrans %}</h2>
+        <div class="row pb40">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="agent">
+                    <a href="#" class="agent-avatar">
+                        <img src="images/joy_gu.jpg" alt="Joy Gu">
+                        <div class="ring"></div>
+                    </a>
+                    <div class="agent-name osLight">{% trans %}homepage.sales_1{% endtrans %}</div>
+                    <div class="agent-contact">
+                        <a href="mailto:joy.gu@ipx.net" class="btn btn-sm btn-icon btn-round btn-o btn-green">
+                            <span class="fa fa-envelope-o"></span></a>
+                        <a href="https://www.linkedin.com/in/0433901661" target="_blank"
+                           class="btn btn-sm btn-icon btn-round btn-o btn-facebook">
+                            <span class="fa fa-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="agent">
+                    <a href="#" class="agent-avatar">
+                        <img src="images/giselle_yu.jpg" alt="Giselle Yu">
+                        <div class="ring"></div>
+                    </a>
+                    <div class="agent-name osLight">{% trans %}homepage.sales_2{% endtrans %}</div>
+                    <div class="agent-contact">
+                        <a href="mailto:giselle.yu@ipx.net" class="btn btn-sm btn-icon btn-round btn-o btn-green">
+                            <span class="fa fa-envelope-o"></span></a>
+                        <a href="https://www.linkedin.com/in/giselle-yu-08208892" target="_blank"
+                           class="btn btn-sm btn-icon btn-round btn-o btn-facebook">
+                            <span class="fa fa-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="agent">
+                    <a href="#" class="agent-avatar">
+                        <img src="images/florence_law.jpg" alt="Florence Law">
+                        <div class="ring"></div>
+                    </a>
+                    <div class="agent-name osLight">{% trans %}homepage.sales_3{% endtrans %}</div>
+                    <div class="agent-contact">
+                        <a href="mailto:flo.law@ipx.net" class="btn btn-sm btn-icon btn-round btn-o btn-green">
+                            <span class="fa fa-envelope-o"></span></a>
+                        <a href="https://www.linkedin.com/in/florencelaw/" target="_blank"
+                           class="btn btn-sm btn-icon btn-round btn-o btn-facebook">
+                            <span class="fa fa-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="agent">
+                    <a href="#" class="agent-avatar">
+                        <img src="images/jenny_li.jpg" alt="Jenny Li">
+                        <div class="ring"></div>
+                    </a>
+                    <div class="agent-name osLight">{% trans %}homepage.sales_4{% endtrans %}</div>
+                    <div class="agent-contact">
+                        <a href="mailto:jenny.li@ipx.net" class="btn btn-sm btn-icon btn-round btn-o btn-green">
+                            <span class="fa fa-envelope-o"></span></a>
+                        <a href="https://www.linkedin.com/in/jenny-li-b7174348" target="_blank"
+                           class="btn btn-sm btn-icon btn-round btn-o btn-facebook">
+                            <span class="fa fa-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+
+<div class="home-footer">
+    <div class="footer-container container">
+        <hr>
+        <div class="left-footer col-md-7 col-xs-12">
+            <div class="company-name">
+                {% trans %}homepage.international_property_exchange_centre{% endtrans %}
+            </div>
+            <br><br>
+            <div class="contact">
+                <div class="contact-title col-xs-3 col-sm-2">{% trans %}homepage.hotline{% endtrans %}</div>
+                <div class="contact-details col-xs-9">+61 3 9813 4595</div>
+                <div class="contact-title col-xs-3 col-sm-2">{% trans %}homepage.address{% endtrans %}</div>
+                <div class="contact-details col-xs-9">Level 1, 668 Burwood Rd, Hawthorn East VIC 3123, Australia</div>
+            </div>
+        </div>
+        <div class="right-footer col-md-5 col-xs-12" style="margin-top:10px">
+            <div class="footer-links">
+                <ul>
+                    <li>
+                        <a class="btn-trans-lemon" href="#" data-toggle="modal"
+                           data-target="#signup">{% trans %}homepage.register_as_sales{% endtrans %}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/ipxnet/?fref=ts" target="_blank"><img
+                                    src="/images/icon-fb.svg"></a></li>
+                    <li><a href="https://www.linkedin.com/company/10703019" target="_blank"><img
+                                    src="/images/icon-linkedin.svg"></a></li>
+                    <li>
+                        <a class="tooltip-wechat">
+                            <img src="/images/icon-wechat.svg">
+                            <span><img src="/images/wechat-iprex-qr.jpg"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="copyrights">
+                © All Rights Reserved 2016-2017
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">{% trans %}homepage.sign_in{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+                <form id="signin_form" role="form" action="{{ path('login_check') }}" method="post">
+                    <div class="form-group">
+                        <input name="_username" type="text" placeholder="{% trans %}login.username{% endtrans %}"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input name="_password" type="password" placeholder="{% trans %}login.password{% endtrans %}"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="checkbox custom-checkbox">
+                                    <label>
+                                        <input type="checkbox">
+                                        <span class="fa fa-check"></span>
+                                        {% trans %}login.remember_me{% endtrans %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group-justified">
+                            <a href="javascript:{}" onclick="document.getElementById('signin_form').submit();"
+                               class="btn btn-lg btn-green">{% trans %}login.sign_in{% endtrans %}</a>
+                        </div>
+                    </div>
+                    <p class="help-block">{% trans %}login.not_a_member{% endtrans %}
+                        <a href="#" class="modal-su text-green">{% trans %}login.sign_up{% endtrans %}</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="signup" role="dialog" aria-labelledby="signupLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signupLabel">{% trans %}homepage.sign_up{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+                <form id="signup_form" role="form" onsubmit="return false">
+                    <div class="form-group">
+                        <input placeholder="{% trans %}registration.first_name{% endtrans %}"
+                               name="first_name" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="{% trans %}registration.last_name{% endtrans %}"
+                               name="last_name" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="{% trans %}registration.email{% endtrans %}"
+                               name="email" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="{% trans %}registration.password{% endtrans %}"
+                               name="password" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="{% trans %}registration.confirm_password{% endtrans %}"
+                               name="confirm_password" type="text" class="form-control" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfIte ">
+                            <a id="result"></a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group-justified">
+                            <input id="signup_submit" class="btn btn-lg btn-green" type="submit"
+                                   value="{% trans %}registration.sign_up{% endtrans %}" />
+                        </div>
+                    </div>
+                    <p class="help-block">
+                        {% trans %}registration.already_a_member{% endtrans %}
+                        <a href="#" class="modal-si text-green">
+                            {% trans %}registration.sign_in{% endtrans %}
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-ui-touch-punch.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.placeholder.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.touchSwipe.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.visible.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
+</body>
+</html>

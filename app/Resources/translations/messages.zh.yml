@@ -1,0 +1,307 @@
+international_property_exchange_centre: 国际地产交易中心
+Apartment: 公寓
+House and Land: 别墅
+Land: 土地
+Townhouse: 联排别墅
+Estate: 地块
+Others: 其他
+Admin: 管理员
+Sales: 经纪人
+Guest: 游客
+
+Australia: 澳大利亚
+New Zealand: 新西兰
+Thailand: 泰国
+United Kingdom: 英国
+United States: 美国
+Canada: 加拿大
+
+language: zh-cn,en-us
+js_language: zh
+
+# Homepage Translation
+homepage:
+  sign_up: 注册
+  sign_in: 登入
+  sing_out: 登出
+  welcome_back: 欢迎回来
+  list_property: 发布房源
+  slogan: 国际不动产交易 你是中心
+  sub_slogan: 房源只是起点 交易才是核心
+  australia_state: 澳大利亚州
+  project_type: 项目类型
+  from: 从
+  to: 到
+  search: 搜索
+  advanced_search: 高级搜索
+  wrap: International Property Exchange(简称IPX)是全球领先的跨国不动产交易平台,帮助全球不动产机构互联、协作、交易。
+  our_services: 我们的服务
+  icon_1: 为您寻找合适的房源
+  icon_sub_1: 全球房产都在您的掌握
+  icon_2: 我们有经验丰富的地产经纪
+  icon_sub_2: 为您提供全方位的专人服务
+  icon_3: 帮助您投资一处心仪的房产
+  icon_sub_3: 各种各样的房产信息应有尽有
+  icon_4: 帮助您发布最新的房源
+  icon_sub_4: 获得房产信息在瞬息之间
+  our_agents: 我们的经纪人
+  sales_1: 顾文
+  sales_2: 俞静
+  sales_3: 罗文惠
+  sales_4: 李笑杰
+  hotline: 联系电话
+  address: 公司地址
+  international_property_exchange_centre: 国际地产交易中心
+  hotline: 联系电话
+  address: 公司地址
+  register_as_sales: 注册为经纪人
+
+#Login Page
+login:
+  username: 邮箱
+  password: 密码
+  remember_me: 记住我
+  not_a_member: 不是注册会员？
+  sign_up: 注册
+  sign_in: 登入
+
+# Registration Page
+registration:
+  first_name: 名字
+  last_name: 姓氏
+  email: 邮箱
+  password: 密码
+  confirm_password: 确认密码
+  sign_up: 注册
+  already_a_member: 已经是注册会员
+  sign_in: 登陆
+
+# Header
+header:
+  home: 主页
+  add: 发布
+  explore: 搜索
+  profile: 用户信息
+  log_out: 登出
+  log_in: 登录
+  search_for: 搜索别墅，公寓...
+
+# Project Detail Page
+single:
+  loading_map: 地图加载中...
+  bedrooms: 卧室
+  bathrooms: 浴室
+  sq_m: 平方米
+  contact_agent: 联系经纪人
+  description: 项目描述
+  consult_us_price: 请询问我们价格
+  consult_us: 请询问我们
+  on_sale: 销售中
+  amenities: 项目包含设施
+  garage: 车库
+  outdoor_pool: 室外游泳馆
+  garden: 花园
+  security_system: 安全系统
+  internet: 网络
+  telephone: 电话
+  air_conditioning: 空调系统
+  heating: 加热系统
+  fireplace: 壁炉
+  balcony: 阳台
+  tv_cable: 电视线缆
+  similar_properties: 相似项目
+  name: 名字
+  email: 邮件地址
+  subject: 邮件主题
+  message: 消息内容
+  send_message: 发送消息
+  close: 关闭
+  email_sent_msg: 邮件已发送成功
+
+# Explore Page
+explore:
+  explore: 项目搜索
+  loading_map: 地图加载中...
+  filter_your_results: 过滤搜索条件
+  states: 所在州
+  property_type: 项目类型
+  all: 所有
+  price_range: 价格区间
+  search: 搜索
+  sorry_msg: 抱歉，我们不能找到与您过滤条件所匹配的房源
+  suggestions: 建议：
+  suggestions_1: – 尝试改变过滤条件
+  suggestions_2: – 扩大您的搜索范围
+  interest_project: 您可能感兴趣以下项目
+  on_sale: 销售中
+  consult_us_price: 请询问我们价格
+  consult_us: 请询问我们
+  total: 总共
+  results: 条结果
+
+# Profile
+profile:
+  profile_info: 用户信息
+  basic_info:  用户基本信息
+  first_name: 名字
+  last_name: 姓氏
+  gender: 性别
+  male: 男
+  female: 女
+  office_phone: 座机电话
+  mobile_phone: 手机号
+  user_type: 用户类型
+  upload_profile_image: 上传头像
+  region: 所属地区
+  modify_password: 修改密码
+  new_password: 新密码
+  re_type_password: 确认新密码
+  save: 保存
+  tips: 温馨提示：请选择上传头像图片为正方形图片（例如１５０＊１５０像素的图片）
+  upload_profile_successfully: 上传头像成功
+  image_is_null: 请点击圆形图片上传一张头像
+  fail_upload_image: 上传头像失败，请重新上传
+  fail_move_directory: 上传头像失败
+
+# Add
+add:
+  list_a_new_property: 上传新项目
+  title: 项目标题
+  price_from: 最小价格
+  price_to: 最高价格
+  description: 项目描述
+  address: 项目地址
+  enter_a_location: 输入一个地址
+  drag_location: 你可以将地图图片拽到指定项目地址
+  suburb: 区
+  state: 州
+  zip_code: 邮编
+  country: 国家
+  bedrooms: 卧室数量
+  bathrooms: 浴室数量
+  cars: 车位
+  storages: 储藏室
+  type: 项目类型
+  all: 所有
+  internal_area: 室内面积
+  external_area: 室外面积
+  land_area: 土地面积
+  sq_m: 平方米
+  image_gallery: 图片
+  browse_images: 选择图片
+  drag_image: 你可以一次性选择多个图片
+  amenities: 项目包含设施
+  garage: 车库
+  outdoor_pool: 室外游泳馆
+  garden: 花园
+  security_system: 安全系统
+  internet: 网络
+  telephone: 电话
+  air_conditioning: 空调系统
+  heating: 加热系统
+  fireplace: 壁炉
+  balcony: 阳台
+  tv_cable: 电视线缆
+  add_property: 添加项目
+
+# Investment Calculator Page
+investment_calculator:
+  investment_calculator: 投资计算器
+  investment_assumptions: 投资参数
+  property_price: 房产价格
+  initial_estimation: 初步估计为
+  initial_set: 初步设置为
+  stamp_duty_rule: 印花税计算器目前试用于澳洲房产，其他地区请直接填入预估值
+  per_week: 每周
+  per_year: 每年
+  year: 年
+  loan_percentage: 可贷款比例
+  loan_interest_rate: 贷款利息
+  count_year: 计算年限
+  body_corp: 年物业费
+  legal_fee: 律师费
+  accounting_fee: 会计费
+  council_rate: 年市政费
+  stamp_duty: 印花税
+  water_rate: 年排污费
+  rent_weekly: 每周租金
+  annual_growth_rate: 年涨幅
+  accept_view_report: 计算并查看投资报告
+  local: 本地居民
+  firb: 海外人士
+  stamp_duty_calculator: 印花税计算器
+  client_type: 客户人群
+  first_home: 首次购房
+  property_type: 房产类别
+  primary_residence: 自住房
+  investment_property: 投资房
+  firb_surcharge: 海外附加税
+  state: 所在州
+  calculate: 计算
+  yes: 是
+  no: 否
+  disclaimer: <span>免责声明</span>
+  disclaimer_content: 本网站和/或APP应用<span>仅包含的一般信息</span>，并<span>不意味</span>着已考虑到投资者的具体财务情况。所提供的信息与结果纯属为估值，仅供参考。本网站和/或APP应用、工具及产生的结果不构成任何一方或多方的协议，也不能构成与任何房产相关的协议。本报告所载信息不构成任何法律或财务建议，也不能形成任何类型的合同的一部分。在您做任何决定之前，您应寻求独立财务及法律咨询。
+  firb_surcharge_tooltips: 海外附加税为房产价格的一定百分比，目前仅适用于VIC,NSW和QLD
+# Investment Report Page
+investment_report:
+  investment_report: 房产投资报告
+  refine_assumptions: 修改参数
+  return_project: 返回项目
+  prepared_by: 撰写人
+  created: 创建于
+  property_details: 房产详情
+  lot: 物业编号
+  bed: 卧室
+  bath: 浴室
+  car_space: 车位
+  study: 书房
+  internal_area: 室内面积
+  balcony_area: 室外面积
+  none: 暂无
+  view: 房屋朝向
+  project_profile: 项目摘要
+  project_descriptions: 项目介绍
+  investment_analysis: 投资分析
+  investment_result: 数据分析
+  investment_expenses: 购房支出
+  investment_income: 收入估算
+  investment_summary: 购房综合
+  out_of_pocket: 购房出资
+  total_loan: 贷款总额
+  total_loan_interest: 还息总额
+  interest_per_week: 每周还息
+  interest_per_month: 每月还息
+  misc_fee_total: 杂费总额
+  rental_income_with_compound: 租金总收入
+  income_average_per_week: 平均每周租金
+  income_average_per_month: 平均每月租金
+  est_market_value: 预计估值
+  total_expenses: 总支出
+  total_out_of_pocket: 现款支付
+  total_income: 总收入
+  total_profit: 总收益
+  total_return: 总回报率
+  average_annual_return: 平均年回报率
+  cashflow_per_year: 平均每年现金流
+  cashflow_per_week: 平均每周现金流
+  cash_after_refinance: 可套现金额
+  comparison_graphs: 对比图
+  rent_income_graph: 租金趋势图
+  property_value_graph: 房产价值趋势图
+  investment_return_graph: 投资回报趋势图
+  investment_expanses_percentage_graph: 投资支出分配图
+  close: 关闭
+  year: 年份
+  rental_income_per_year: 年租金收入
+  property_value_per_year: 房产价值预估
+  total_return_year: 总投资回报
+  summary: 投资摘要
+  first_time_expenses: 首次购房支出
+  total: 共计
+  cash_flow_first_year: 预估第一年现金流
+  rent_income: 租金收入
+  interest_first_year: 年还息支出
+  misc_fee_first_year: 年杂费
+  cashflow_first_year: 年现金流
+  info_advanced_report: 查看更详细的<span>投资数据分析</span>，请设置<span>计算年限</span>超过１年

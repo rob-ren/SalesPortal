@@ -1,0 +1,57 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: robert
+ * Date: 10/8/17
+ * Time: 4:58 PM
+ */
+
+namespace DatabaseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="ipx_sales_project_meta")
+ */
+class ProjectMeta
+{
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="project_metas")
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
+     */
+    protected $project;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $meta_name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $meta_value;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $timestamp;
+
+    function __construct()
+    {
+        $this->timestamp = new \DateTime ();
+    }
+}

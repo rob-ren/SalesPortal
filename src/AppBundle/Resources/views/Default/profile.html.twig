@@ -1,0 +1,185 @@
+{% extends 'AppBundle:Default:common/common.html.twig' %}
+{% block header %}
+    {% include'AppBundle:Default:common/header.html.twig' with {'user' :user} %}
+{% endblock %}
+{% block title %}
+	<title>{% trans %}profile.profile_info{% endtrans %} | {% trans %}international_property_exchange_centre{% endtrans %} </title>
+{% endblock %}
+{% block body %}
+<!-- Content -->
+<div id="wrapper" class="full">
+    <div id="mapView" class="min">
+        <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
+    </div>
+    <div class="max">
+        <div class="tables">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{% trans %}profile.basic_info{% endtrans %}</div>
+                        <div class="panel-body">
+                            <form role="form" action="{{ url('app_profile_update') }}" method="post">
+                                <div class="form-group">
+                                    <label for="last_name">{% trans %}profile.last_name{% endtrans %}</label>
+                                    <input class="form-control" id="last_name" name="last_name" required
+                                           value={{ user['last_name'] }}>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first_name">{% trans %}profile.first_name{% endtrans %}</label>
+                                    <input class="form-control" id="first_name" name="first_name" required
+                                           value={{ user['first_name'] }}>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans %}profile.gender{% endtrans %}</label>
+                                    {% if user['gender']=="female" %}
+                                        <div class="radio custom-radio">
+                                            <label>
+                                                <input type="radio" name="gender" value="male">
+                                                <span class="fa fa-circle"></span>
+                                                {% trans %}profile.male{% endtrans %}
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="gender" value="female" checked="checked">
+                                                <span class="fa fa-circle"></span>
+                                                {% trans %}profile.female{% endtrans %}
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <div class="radio custom-radio">
+                                            <label>
+                                                <input type="radio" name="gender" value="male" checked="checked">
+                                                <span class="fa fa-circle"></span>
+                                                {% trans %}profile.male{% endtrans %}
+                                            </label> <label>
+                                                <input type="radio" name="gender" value="female">
+                                                <span class="fa fa-circle"></span>
+                                                {% trans %}profile.female{% endtrans %}
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">
+                                    {% trans %}profile.office_phone{% endtrans %}
+                                    </label>
+                                    <input class="form-control" id="phone_number" name="phone_number"
+                                           value="{{ user['office_phone'] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile_number">
+                                        {% trans %}profile.mobile_phone{% endtrans %}
+                                    </label>
+                                    <input class="form-control" id="mobile_number" name="mobile_number"
+                                           value="{{ user['mobile_phone'] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans %}profile.user_type{% endtrans %}: </label>
+                                    <label style="margin-left: 20px">{{ user['user_type'] | trans }}</label>
+                                </div>
+                                <button class="btn btn-green" type="submit">
+                                {% trans %}profile.save{% endtrans %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{% trans %}profile.modify_password{% endtrans %}</div>
+                        <div class="panel-body">
+                            <form role="form" action="{{ url('app_password_update') }}" method="post">
+                                <div class="form-group">
+                                    <label for="new_password" class="control-label">
+                                    {% trans %}profile.new_password{% endtrans %}
+                                    </label>
+                                    <input type="password" class="form-control" id="new_password" name="new_password"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="re_new_password" class="control-label">
+                                    {% trans %}profile.re_type_password{% endtrans %}
+                                    </label>
+                                    <input type="password" class="form-control" id="re_new_password"
+                                           name="re_new_password" required onkeyup="checkPass(); return false;">
+                                    <p id="confirm_message" class="help-block"></p>
+                                </div>
+                                {% if result['type']=="update_password" %}
+                                    <div class="form-group">
+                                        <label style="color: red">{{ result['message'] }}</label>
+                                    </div>
+                                {% endif %}
+                                <button class="btn btn-green" type="submit">
+                                {% trans %}profile.save{% endtrans %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{% trans %}profile.upload_profile_image{% endtrans %}</div>
+                        <div class="panel-body">
+                            <div class="profile-card">
+                                <div class="pc-avatar">
+                                    <a href="#" onClick="opendialogbox('profile_image');">
+                                        <image class="btn-round" id="profile_display"
+                                               src="{{ user['avatar_url'] }}"></image>
+                                    </a>
+                                    <p class="help-block">{% trans %}profile.tips{% endtrans %}</p>
+                                </div>
+                                <div class="pc-name">
+                                    <form class="text-center" role="form" action="{{ url('app_profile_image_upload') }}"
+                                          enctype="multipart/form-data" method="post">
+                                        <input id="profile_image" type="file" name="profile_image" class="hidden">
+                                        <button class="btn btn-green" name="submit" type="submit">
+                                        {% trans %}profile.save{% endtrans %}
+                                        </button>
+                                        {% if result['type']=="upload_profile_image" %}
+                                            <div class="form-group">
+                                                <label style="color: red">
+                                                    {{ ('profile.'~result['message'])|trans }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}{% block javascripts %}
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places"
+        type="text/javascript"></script>
+<script type="text/javascript">
+    // read selected image src
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#profile_display').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#profile_image").change(function () {
+        readURL(this);
+    });
+    function opendialogbox(inputid) {
+        document.getElementById(inputid).click();
+    }
+    document.getElementById("search_btn").onclick = function () {
+        var keyword = document.getElementById('search_keyword').value;
+        document.getElementById("search_btn").href = "/explore/1?keyword=" + keyword;
+    };
+</script>
+<script type="text/javascript" src="{{ asset('js/infobox.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.tagsinput.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/fileinput.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+{% endblock %}

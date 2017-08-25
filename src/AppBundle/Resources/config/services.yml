@@ -1,0 +1,36 @@
+services:
+#    app.example:
+#        class: AppBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    ipx_password_encoder:
+        class: DatabaseBundle\Common\SHAEncoder
+
+    iprex_s3_client:
+        class: AppBundle\Util\AwsS3StreamWrapper
+        arguments: ['%iprex.s3.media.key%', '%iprex.s3.media.secret%', 'ap-southeast-2']
+
+    iprex_file_system_service:
+        class: AppBundle\Util\IprexLocalFileSystem
+        arguments: [@iprex_local_filesystem, '%local_upload_dir%', @event_dispatcher]
+
+    iprex_file_uploaded_service_listener:
+        class: AppBundle\EventListener\S3FileEventListener
+        arguments: [@iprex_s3_filesystem]
+        tags:
+          - {name: kernel.event_listener, event: iprex.file.uploaded, method: onFileUploaded}
+
+    account_business:
+        class: DatabaseBundle\Business\AccountBusinessModel
+        arguments: ["@doctrine"]
+
+    project_business:
+        class: DatabaseBundle\Business\ProjectBusinessModel
+        arguments: ["@doctrine"]
+
+    project_meta_business:
+        class: DatabaseBundle\Business\ProjectMetaBusinessModel
+        arguments: ["@doctrine"]
+
+    project_search_business:
+        class: DatabaseBundle\Business\ProjectSearchBusinessModel
+        arguments: ["@doctrine"]

@@ -1,0 +1,308 @@
+international_property_exchange_centre: International Property Exchange Centre
+Apartment: Apartment
+House and Land: House and Land
+Land: Land
+Townhouse: Townhouse
+Estate: estate
+Others: Others
+Admin: Admin
+Sales: Sales
+Guest: Guest
+
+Australia: Australia
+New Zealand: New Zealand
+Thailand: Thailand
+United_Kingdom: United Kingdom
+United States: United States
+Canada: Canada
+
+language: en-us,en-us
+js_language: en
+
+# Homepage Translation
+homepage:
+  sign_up: Sign Up
+  sign_in: Sign In
+  sing_out: Sing Out
+  welcome_back: Welcome Back
+  list_property: List a Property
+  slogan: The Global Way to Sell.
+  sub_slogan: We don't just connect you to 1,000+ sales agencies. We make sure transactions happen.
+  australia_state: Australia State
+  project_type: Project Type
+  from: From
+  to: To
+  search: Search
+  advanced_search: Advanced Search
+  wrap: International Property Exchange (IPX) is a multinational property transaction platform where global real estate professionals list, sell and manage properties
+  our_services: Our Services
+  icon_1: Find places anywhere in the world
+  icon_sub_1: International and Local Properties Available in Your Pocket
+  icon_2: We have agents with experience
+  icon_sub_2: Full Support from Our Dedicated Service Manager
+  icon_3: Buy or rent beautiful properties
+  icon_sub_3: Comprehensive Property Information Accessible Anywhere, Anytime
+  icon_4: With agent account you can list properties
+  icon_sub_4: Obtain Authorization to Sell Within Minutes
+  our_agents: Our Agents
+  sales_1: Joy Gu
+  sales_2: Giselle Yu
+  sales_3: Florence Law
+  sales_4: Jenny Li
+  international_property_exchange_centre: International Property Exchange Centre Pty Ltd
+  hotline: Hotline
+  address: Company Address
+  register_as_sales: Register as Sales
+
+# Login Page
+login:
+  username: Email
+  password: Password
+  remember_me: Remember me
+  not_a_member: Don't have an account?
+  sign_up: Sign Up
+  sign_in: Sign In
+
+# Registration Page
+registration:
+  first_name: First Name
+  last_name: Last Name
+  email: Email
+  password: Password
+  confirm_password: Confirm Password
+  sign_up: Sign Up
+  already_a_member: Already a member
+  sign_in: Sign In
+
+# Header
+header: 
+  home: Home
+  add: New
+  explore: Explore
+  profile: Profile
+  log_out: Log out
+  log_in: Log in
+  search_for: Search for houses, apartments...
+
+# Project Detail Page
+single:
+  loading_map: Loading Map...
+  bedrooms: Bedrooms
+  bathrooms: Bathrooms
+  sq_m: Sq m
+  contact_agent: Contact Agent
+  description: Description
+  consult_us_price: Consult Us for Price
+  consult_us: Consult Us
+  on_sale: On Sale
+  amenities: Amenities
+  garage: Garage
+  outdoor_pool: Outdoor Pool
+  garden: Garden
+  security_system: Security System
+  internet: Internet
+  telephone: Telephone
+  air_conditioning: Air Conditioning
+  heating: Heating
+  fireplace: Fireplace
+  balcony: Balcony
+  tv_cable: TV Cable
+  similar_properties: Similar Properties
+  name: Name
+  email: Email
+  subject: Subject
+  message: Message
+  send_message: Send Message
+  close: Close
+  email_sent_msg: Email Sent Sucessfully.
+
+# Explore Page
+explore:
+  explore: Project explore
+  loading_map: Loading Map...
+  filter_your_results: Filter your results
+  states: States
+  property_type: Property Type
+  all: All
+  price_range: Price Range
+  search: Search
+  sorry_msg: Sorry, We couldn't find anything matching your search criteria
+  suggestions: Suggestions：
+  suggestions_1: – Try changing your search criteria
+  suggestions_2: – Expand your search to include more areas
+  interest_project: You may be interested in the following projects
+  on_sale: On Sale
+  consult_us_price: Consult Us for Price
+  consult_us: Consult Us
+  total: Total
+  results: Results
+
+# Profile
+profile:
+  profile_info: Profile
+  basic_info:  Basic Information
+  first_name: First Name
+  last_name: Last Name
+  gender: Gender
+  male: Male
+  female: Female
+  office_phone: Office Phone
+  mobile_phone: Mobile Phone
+  user_type: User Type
+  upload_profile_image: Upload Profile Image
+  region: Region
+  modify_password: Modify Password
+  new_password: New Password
+  re_type_password: Re-Type Password
+  save: Save
+  tips: Tips: Please select a squre image as your profile image (eg. 150 * 150 pixel image)
+  upload_profile_successfully: upload profile image successfully
+  image_is_null: Please click the image to upload your profile
+  fail_upload_image: Fail to upload your profile, please upload again.
+  fail_move_directory: Fail to upload your profile, please upload again.
+# Add
+add:
+  list_a_new_property: List a New Property
+  title: Title
+  price_from: Price From
+  price_to: Price To
+  description: Description
+  address: Address
+  enter_a_location: Enter a location
+  drag_location: You can drag the marker to property position
+  suburb: Suburb
+  state: State
+  zip_code: Zip Code
+  country: Country
+  bedrooms: Bedrooms
+  bathrooms: Bathrooms
+  cars: Cars
+  storages: Storages
+  type: Type
+  all: All
+  internal_area: Internal Area
+  external_area: External Area
+  land_area: Land Area
+  sq_m: Sq m
+  image_gallery: Image Gallery
+  browse_images: Browse Images
+  drag_image: You can select multiple images at once
+  amenities: Amenities
+  garage: Garage
+  outdoor_pool: Outdoor Pool
+  garden: Garden
+  security_system: Security System
+  internet: Internet
+  telephone: Telephone
+  air_conditioning: Air Conditioning
+  heating: Heating
+  fireplace: Fireplace
+  balcony: Balcony
+  tv_cable: TV Cable
+  add_property: Add Property
+
+# Investment Calculator Page
+investment_calculator:
+  investment_calculator: Investment Calculator
+  investment_assumptions: Investment Assumptions
+  property_price: Property Price
+  initial_estimation: initial estimation is
+  initial_set: initial set is
+  stamp_duty_rule: Stamp Duty Calculator is only available for Australia properties currently, please enter your assumptions value for other area's properties
+  per_week: per week
+  per_year: per year
+  year: year
+  loan_percentage: Loan Percentage
+  loan_interest_rate: Loan Interest Rate
+  count_year: Years
+  body_corp: Body Corp
+  legal_fee: Legal Fee
+  accounting_fee: Accounting Fee
+  council_rate: Council Rate
+  stamp_duty: Stamp Duty
+  water_rate: Water Rate
+  rent_weekly: Rent Weekly
+  annual_growth_rate: Annual Growth Rate
+  accept_view_report: Accept & view the report
+  local: Local
+  firb: FIRB
+  stamp_duty_calculator: Stamp Duty Calculator
+  client_type: Client Type
+  first_home: First Home
+  property_type: Property Type
+  primary_residence: Primary Residence
+  investment_property: Investment Property
+  firb_surcharge: FIRB Surcharge
+  state: State
+  calculate: Calculate
+  yes: Yes
+  no: No
+  disclaimer: <span>Disclaimer</span>
+  disclaimer_content: The web site and/or app contains <span> general information only</span> and <span>does not</span> purport to take into account <span>any</span> investor's particular <span>financial</span> circumstances. Results and information are estimates and provided for illustrative purposes only. This tool, and the results generated, do not constitute any agreement by any party nor confirmation about the particular property. The information contained in this report does not constitute legal or financial advice, and does not form part of a contract of any type. You should seek independent financial and legal advice before proceeding with any decision.
+  firb_surcharge_tooltips: FIRB surcharge is only applied in VIC,NSW and QLD, which calculated by the percentage of property price.
+
+# Investment Report Page
+investment_report:
+  investment_report: Property Investment Report
+  refine_assumptions: Refine Assumptions
+  return_project: Return to the Project
+  prepared_by: Prepared By
+  created: Created
+  property_details: Property Details
+  lot: Lot
+  bed: Bed
+  bath: Bath
+  car_space: Car Space
+  study: Study
+  internal_area: Internal Area
+  balcony_area: External Area
+  none: N/A
+  view: View
+  project_profile: Project Profile
+  project_descriptions: Project Descriptions
+  investment_analysis: Investment Analysis
+  investment_result: Data Analysis
+  investment_expenses: Investment Expenses
+  investment_income: Investment Income
+  investment_summary: Investment Summary
+  out_of_pocket: Out of Pocket for Price
+  total_loan: Total Loan
+  total_loan_interest: Total Loan Interest
+  interest_per_week: Interest per week
+  interest_per_month: Interest per month
+  misc_fee_total: Misc Fee Total
+  rental_income_with_compound: Rental Income
+  income_average_per_week: Income per week
+  income_average_per_month: Income per month
+  est_market_value: Est. Market Price
+  total_expenses: Total Expenses
+  total_out_of_pocket: Out of Pocket
+  total_income: Total Income
+  total_profit: Total Profit
+  total_return: Total Return
+  average_annual_return: Annual Return
+  cashflow_per_year: Annual Cashflow
+  cashflow_per_week: Cashflow per week
+  cash_after_refinance: Cash Out
+  comparison_graphs: Comparison Graphs
+  rent_income_graph: Rent Income Graph
+  property_value_graph: Property Value Graph
+  investment_return_graph: Investment Return Graph
+  investment_expanses_percentage_graph: Investment Expanses Percentage Graph
+  close: Close
+  water view: Wate View
+  city view: City View
+  year: Year
+  rental_income_per_year: Rental Income
+  property_value_per_year: Est. Market Price
+  total_return_year: Total Return
+  summary: Investment Summary
+  first_time_expenses: Total Out of Pocket
+  total: Total
+  cash_flow_first_year: Est. Cash Flow in First Year
+  rent_income: Rent Income
+  interest_first_year: Interest Expenses
+  misc_fee_first_year: Misc Fee
+  cashflow_first_year: Total Cash Flow
+  info_advanced_report: Set <span>Years</span> more than one year for viewing more <span>invstment analysis</span>.
+  firb_surcharge: FIRB Surcharge

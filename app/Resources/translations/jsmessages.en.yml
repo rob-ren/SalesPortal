@@ -1,0 +1,28 @@
+registration:
+  valid_email: Valid email address
+  invalid_email: Invalid email address
+  password_match: Passwords match
+  password_not_match: Passwords do not match
+  empty_field: Please fill in this field
+  empty_selection: Please select an option
+  
+# bing map translation
+bingmap: 
+  consult_us: Please consult us for price
+  sale: Sale
+  close: Close
+  view: View
+
+# bar chart translation
+barchart:
+  title_rent_income: Rental Income
+  title_property_value: Est. Market Price
+  title_total_return: Total Return
+  title_annual_return: Annual Return
+  title_out_of_pocket: Out of Pocket
+  title_total_loan: Total Loan
+  title_total_loan_interest: Total Loan Interest
+  title_misc_fee_total: Misc Fee Total
+
+stamp_duty:
+    tooltips: full stamp duty is

@@ -1,0 +1,3 @@
+database_homepage:
+    path:     /
+    defaults: { _controller: DatabaseBundle:Default:index }

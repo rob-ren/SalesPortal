@@ -1,0 +1,62 @@
+imports:
+    - { resource: config.yml }
+
+#framework:
+#    validation:
+#        cache: validator.mapping.cache.doctrine.apc
+#    serializer:
+#        cache: serializer.mapping.cache.apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+        console:
+            type: console
+
+services:
+    iprex.aws_s3.client:
+                class: Aws\S3\S3Client
+                factory_class: Aws\S3\S3Client
+                factory_method: 'factory'
+                arguments:
+                    -
+                        credentials:
+                            key: '%iprex.s3.media.key%'
+                            secret: '%iprex.s3.media.secret%'
+                        region: 'ap-southeast-2'
+                        version: 'latest'
+knp_gaufrette:
+    adapters:
+        iprex_s3_file_system:
+            aws_s3:
+                service_id: 'iprex.aws_s3.client'
+                bucket_name: '%iprex.s3.media.bucket.name%'
+                options:
+                    acl: 'public-read'
+        iprex_local_adapter:
+                    local:
+                        directory: "%kernel.root_dir%/../web"
+                        create: true
+    filesystems:
+            iprex_s3:
+                adapter: iprex_s3_file_system
+                alias: iprex_s3_filesystem
+            iprex_local:
+                adapter: iprex_local_adapter
+                alias: iprex_local_filesystem
+
+parameters:
+    local_upload_dir: "%kernel.root_dir%/../web"

@@ -1,0 +1,86 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: '%kernel.root_dir%/config/routing_dev.yml'
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+        console:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: INFO
+                VERBOSITY_VERY_VERBOSE: DEBUG
+            channels: ["!doctrine"]
+        console_very_verbose:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: NOTICE
+                VERBOSITY_VERY_VERBOSE: NOTICE
+                VERBOSITY_DEBUG: DEBUG
+            channels: ["doctrine"]
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type: firephp
+        #    level: info
+        #chromephp:
+        #    type: chromephp
+        #    level: info
+services:
+    iprex.aws_s3.client:
+                class: Aws\S3\S3Client
+                factory_class: Aws\S3\S3Client
+                factory_method: 'factory'
+                arguments:
+                    -
+                        credentials:
+                            key: '%iprex.s3.media.key%'
+                            secret: '%iprex.s3.media.secret%'
+                        region: 'ap-southeast-2'
+                        version: 'latest'
+knp_gaufrette:
+    adapters:
+        iprex_s3_file_system:
+            aws_s3:
+                service_id: 'iprex.aws_s3.client'
+                bucket_name: 'iprex-dev-media'
+                options:
+                        acl: 'public-read'
+        iprex_local_adapter:
+                    local:
+                        directory: "%kernel.root_dir%/../web"
+                        create: true
+    filesystems:
+            iprex_s3:
+                adapter: iprex_s3_file_system
+                alias: iprex_s3_filesystem
+            iprex_local:
+                adapter: iprex_local_adapter
+                alias: iprex_local_filesystem
+
+swiftmailer:
+    transport: "%mailer_transport%"
+    encryption: ssl
+    auth_mode: login
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+
+parameters:
+    local_upload_dir: "%kernel.root_dir%/../web"
+#swiftmailer:
+#    delivery_addresses: ['me@example.com']

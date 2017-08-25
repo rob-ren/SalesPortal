@@ -1,0 +1,74 @@
+app_homepage:
+    path:     /index
+    defaults: { _controller: AppBundle:Index:index }
+
+app_login:
+    path:    /login
+    defaults: { _controller: AppBundle:Index:login }
+
+login_check:
+    path:     /login_check
+
+app_logout:
+    path:    /logout
+    defaults: { _controller: AppBundle:Index:index }
+
+app_register:
+    path:    /register
+    defaults: { _controller: AppBundle:Index:register }
+
+app_add:
+    path:    /add
+    defaults: { _controller: AppBundle:Add:add }
+
+app_list:
+    path:    /list
+    defaults: { _controller: AppBundle:Add:list }
+
+app_explore:
+    path:    /explore/{page}
+    defaults: { _controller: AppBundle:Explore:explore }
+
+app_single:
+    path:    /projects/{project_id}
+    defaults: { _controller: AppBundle:Single:single }
+
+app_apply_email:
+    path:    /apply_msg
+    defaults: { _controller: AppBundle:Single:sendEmail }
+
+app_profile:
+    path:    /profile
+    defaults: { _controller: AppBundle:Profile:profile }
+
+app_profile_update:
+    path:    /profile-updated
+    defaults: { _controller: AppBundle:Profile:updateProfile }
+
+app_profile_image_upload:
+    path:    /profile-image-upload
+    defaults: { _controller: AppBundle:Profile:uploadProfileImage }
+
+app_password_update:
+    path:    /password-update
+    defaults: { _controller: AppBundle:Profile:updatePassword }
+
+app_investment_calculator:
+    path:    /properties/{property_id}/investment_calculator/new
+    defaults: {_controller: AppBundle:Calculator:goProjectCalculator}
+
+app_investment_report:
+    path:    /properties/{property_id}/investment_calculator/report
+    defaults: {_controller: AppBundle:Calculator:calculateInvestment}
+
+app_investment_calculator_public:
+    path:    /investment_calculator/new
+    defaults: {_controller: AppBundle:Calculator:goProjectCalculatorPublic}
+
+app_investment_report_public:
+    path:    /investment_calculator/report
+    defaults: {_controller: AppBundle:Calculator:calculateInvestmentPublic}
+
+app_investment_report_share:
+    path:    /investment_calculator/{property_id}/share
+    defaults: {_controller: AppBundle:Calculator:calculateInvestment}

@@ -1,0 +1,74 @@
+<div id="header">
+    <div class="logo">
+        <a href="{{ path('app_homepage') }}">
+            <span class="fa fa-home marker"></span>
+            <span class="logoText"> {% trans %}header.home{% endtrans %}</span>
+        </a>
+    </div>
+    <a href="#" class="navHandler"><span class="fa fa-bars"></span></a>
+    <div class="search">
+        <a href="#" id="search_btn"><span class="searchIcon icon-magnifier"></span></a>
+        <input id="search_keyword" type="text" placeholder="{% trans %}header.search_for{% endtrans %}">
+    </div>
+    <div class="headerUserWraper">
+        <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <img class="avatar headerAvatar pull-left" src={{ user['avatar_url'] }}>
+            <div class="userTop pull-left">
+                <span class="headerUserName">{{ user['first_name'] }} {{ user['last_name'] }}</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+        <div class="dropdown-menu pull-right userMenu" role="menu">
+            <div class="mobAvatar">
+                <img class="avatar mobAvatarImg" src={{ user['avatar_url'] }}>
+                <div class="mobAvatarName">{{ user['first_name'] }} {{ user['last_name'] }}</div>
+            </div>
+            <ul>
+                <li><a href="{{ path('app_profile') }}">
+                        <span class="icon-user"></span>
+                        {% trans %}header.profile{% endtrans %}
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="{{ path('app_logout') }}">
+                        <span class="icon-power"></span>
+                        {% trans %}header.log_out{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <a href="#" class="mapHandler"><span class="icon-map"></span></a>
+    <div class="clearfix"></div>
+</div>
+
+<!-- Left Side Navigation -->
+
+<div id="leftSide">
+    <nav class="leftNav scrollable">
+        <div class="search">
+            <span class="searchIcon icon-magnifier"></span>
+            <input type="text" placeholder="{% trans %}header.search_for{% endtrans %}">
+            <div class="clearfix"></div>
+        </div>
+        <ul>
+            <li>
+                <a href="{{ url('app_explore',{'page':1}) }}">
+                    <span class="navIcon icon-compass"></span>
+                    <span class="navLabel">{% trans %}header.explore{% endtrans %}</span>
+                </a>
+            </li>
+            {% if user['user_type']== constant('DatabaseBundle\\Enum\\AccountType::admin') %}
+                <li>
+                    <a href="{{ path('app_add') }}">
+                        <span class="navIcon icon-plus"></span>
+                        <span class="navLabel">{% trans %}header.add{% endtrans %}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+<div class="closeLeftSide"></div>

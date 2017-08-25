@@ -1,0 +1,1124 @@
+{% extends 'AppBundle:Default:common/common.html.twig' %}
+{% block header %}
+    {% include 'AppBundle:Default:common/header.html.twig' with {'user' : user} %}
+{% endblock %}
+{% block title %}
+    {% if property is defined %}
+        <title>{% trans %}investment_report.investment_report{% endtrans %}- {{ property['lot'] }}
+            , {{ project['address'] }} | {% trans %} international_property_exchange_centre{% endtrans %} </title>
+    {% else %}
+        <title>{% trans %}investment_report.investment_report{% endtrans %} | {% trans %}
+            international_property_exchange_centre{% endtrans %} </title>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <!-- Content -->
+    <div id="wrapper" class="full">
+        <div id="mapView" class="min">
+            <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
+        </div>
+        <div id="content" class="max">
+            <div class="tables">
+                <h2 class="page-title">{% trans %}investment_report.investment_report{% endtrans %}</h2>
+                <div class="top-return-row">
+                    <a class="btn btn-green link-btn hidden-print" data-toggle="modal"
+                       data-target="#myModal">{% trans %}
+                        investment_report.refine_assumptions{% endtrans %}</a>
+                    {% if user is not null and property is defined %}
+                        <a href="/projects/{{ project["address_url"] }}/{{ project["id"] }}"
+                           class="btn btn-green link-btn">{% trans %}investment_report.return_project{% endtrans %}</a>
+                    {% endif %}
+                </div>
+                <div class="panel panel-default">
+                    {% if property is defined %}
+                        <div class="investment-report-header panel-heading"><h3>{{ project['address'] }}
+                                <span>${{ property['price']|number_format }}</span></h3></div>
+                        <div class="panel-body">
+
+                            <div class="row">
+                                {% if shared_user is not null %}
+                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                        <table class="table investment-report-table">
+                                            <tr>
+                                                <th colspan="4">{% trans %}
+                                                    investment_report.property_details{% endtrans %}</th>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="lot">{% trans %}investment_report.lot{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['lot'] }}</label></td>
+                                                <td><label for="bed">{% trans %}investment_report.bed{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['bed']?property['bed']:0 }}</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="bath">{% trans %}investment_report.bath{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['bath']?property['bath']:0 }}</label></td>
+                                                <td><label for="car_space">{% trans %}
+                                                        investment_report.car_space{% endtrans %}
+                                                        : </label></td>
+                                                <td><label>{{ property['car_space']?property['car_space']:0 }}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="study">{% trans %}investment_report.study{% endtrans %}
+                                                        : </label></td>
+                                                <td><label>{{ property['study']?property['study']:0 }}</label></td>
+                                                <td><label for="internal_area">{% trans %}
+                                                        investment_report.internal_area{% endtrans %}: </label></td>
+                                                <td><label>
+                                                        {% if property['internal_area'] is null or property['internal_area']== 0 %}
+                                                            {{ 'none'|trans }}
+                                                        {% else %}
+                                                            {{ property['internal_area'] }}&nbsp;m<sup>2</sup>
+                                                        {% endif %}
+                                                    </label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="view">{% trans %}investment_report.view{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{ property['view']?(property['view'])|trans:'none'|trans }}</label>
+                                                </td>
+                                                <td><label for="balcony_area">{% trans %}
+                                                        investment_report.balcony_area{% endtrans %}: </label></td>
+                                                <td><label>
+                                                        {% if property['balcony_area'] is null or property['balcony_area']== 0 %}
+                                                            {{ 'none'|trans }}
+                                                        {% else %}
+                                                            {{ property['balcony_area'] }}&nbsp;m<sup>2</sup>
+                                                        {% endif %}
+                                                    </label></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                        <div class="agentAvatar">
+                                            <div class="clearfix"></div>
+                                            <img class="avatar agentAvatarImg" src="{{ shared_user['avatar_url'] }}"
+                                                 alt="avatar">
+                                            <div class="agentName"><span>{{ shared_user['user_type']|trans }}</span>&nbsp;&nbsp;{{ shared_user['first_name'] }}
+                                                &nbsp;{{ shared_user['last_name'] }}</div>
+                                            <div class="title"><strong></strong>
+                                            </div>
+                                            <div class="phone">
+                                                <strong>{% trans %}contract.mobile_phone{% endtrans %}
+                                                    :</strong>&nbsp;{{ shared_user['mobile_phone']?shared_user['mobile_phone']:'none'|trans }}
+                                            </div>
+                                            <div class="email">
+                                                <strong>{% trans %}contract.email{% endtrans %}
+                                                    :</strong>&nbsp;{{ shared_user['email'] }}
+                                                <a href="mailto:{{ shared_user['email'] }}"
+                                                   class="btn btn-icon btn-round btn-green btn-sm"><span
+                                                            class="fa fa-envelope-o"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <table class="table investment-report-table">
+                                            <tr>
+                                                <th colspan="4">{% trans %}
+                                                    investment_report.property_details{% endtrans %}</th>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="lot">{% trans %}investment_report.lot{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['lot'] }}</label></td>
+                                                <td><label for="bed">{% trans %}investment_report.bed{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['bed']?property['bed']:0 }}</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="bath">{% trans %}investment_report.bath{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td><label>{{ property['bath']?property['bath']:0 }}</label></td>
+                                                <td><label for="car_space">{% trans %}
+                                                        investment_report.car_space{% endtrans %}
+                                                        : </label></td>
+                                                <td><label>{{ property['car_space']?property['car_space']:0 }}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="study">{% trans %}investment_report.study{% endtrans %}
+                                                        : </label></td>
+                                                <td><label>{{ property['study']?property['study']:0 }}</label></td>
+                                                <td><label for="internal_area">{% trans %}
+                                                        investment_report.internal_area{% endtrans %}: </label></td>
+                                                <td><label>
+                                                        {% if property['internal_area'] is null or property['internal_area']== 0 %}
+                                                            {{ 'none'|trans }}
+                                                        {% else %}
+                                                            {{ property['internal_area'] }}&nbsp;m<sup>2</sup>
+                                                        {% endif %}
+                                                    </label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="view">{% trans %}investment_report.view{% endtrans %}
+                                                        : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{ property['view']?(property['view'])|trans:'none'|trans }}</label>
+                                                </td>
+                                                <td><label for="balcony_area">{% trans %}
+                                                        investment_report.balcony_area{% endtrans %}: </label></td>
+                                                <td><label>
+                                                        {% if property['balcony_area'] is null or property['balcony_area']== 0 %}
+                                                            {{ 'none'|trans }}
+                                                        {% else %}
+                                                            {{ property['balcony_area'] }}&nbsp;m<sup>2</sup>
+                                                        {% endif %}
+                                                    </label></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="panel-heading investment-report-header"><h3>{% trans %}
+                                investment_report.project_profile{% endtrans %}</h3></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <img src="{{ project['front_image'] }}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4>{% trans %}investment_report.project_descriptions{% endtrans %}</h4>
+                                    <p>{{ project['description']|nl2br }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <img src="http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{{ project['latitude'] }},{{ project['longitude'] }}/8?mapSize=465,250&format=png&pushpin={{ project['latitude'] }},{{ project['longitude'] }};118;&key=AlpVTdDaC3691_Or3dHCg9Jx23DUeUyUPuRCny6YbAAmh0UPCSK0C1U8ud5sLpP7"/>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <img src="http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{{ project['latitude'] }},{{ project['longitude'] }}/14?mapSize=465,250&format=png&pushpin={{ project['latitude'] }},{{ project['longitude'] }};118;&key=AlpVTdDaC3691_Or3dHCg9Jx23DUeUyUPuRCny6YbAAmh0UPCSK0C1U8ud5sLpP7"/>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="panel-heading investment-report-header"><h3>{% trans %}
+                            investment_report.summary{% endtrans %}</h3></div>
+                    <div class="panel-body">
+                        <table class="table investment-report-table">
+                            <tr>
+                                <th colspan="4">
+                                    <span>{% trans %}investment_report.first_time_expenses{% endtrans %}</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="out_of_pocket">{% trans %}investment_report.out_of_pocket{% endtrans %}
+                                        :</label>
+                                </td>
+                                <td>
+                                    <label>${{ investment_result['out_of_pocket']|number_format }}</label>
+                                </td>
+                                <td>
+                                    <label for="legal_fee">{% trans %}investment_calculator.legal_fee{% endtrans %}
+                                        : </label>
+                                </td>
+                                <td>
+                                    <label>${{ investment_result['legal_fee']|number_format }}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="accouting_fee">{% trans %}
+                                        investment_calculator.accounting_fee{% endtrans %}:</label>
+                                </td>
+                                <td>
+                                    <label>${{ investment_result['accounting_fee']|number_format }}</label>
+                                </td>
+                                <td>
+                                    <label for="stamp_duty">{% trans %}investment_calculator.stamp_duty{% endtrans %}
+                                        +{% trans %}investment_calculator.firb_surcharge{% endtrans %}
+                                        : </label>
+                                </td>
+                                <td>
+                                    <label>${{ investment_result['stamp_duty']|number_format }}
+                                        + {{ investment_result['firb_surcharge']|number_format }}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>{% trans %}investment_report.total{% endtrans %}：</td>
+                                <td>
+                                    ${{ investment_result['total_expenses_first_year']|number_format('0','.',',') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="4">
+                                    <span>{% trans %}investment_report.cash_flow_first_year{% endtrans %}</span>
+                                </th>
+                            </tr>
+                            <tr class="success">
+                                <td class="success" colspan="2">{% trans %}investment_report.rent_income{% endtrans %}
+                                    :
+                                </td>
+                                <td class="success" colspan="2">
+                                    <span class="fa fa-plus"></span>&nbsp;${{ investment_result['rental_income_per_year'][0]|number_format('0','.',',') }}
+                                </td>
+                            </tr>
+                            <tr class="danger">
+                                <td class="danger" colspan="2">{% trans %}
+                                    investment_report.interest_first_year{% endtrans %}:
+                                </td>
+                                <td class="danger" colspan="2">
+                                    <label><span
+                                                class="fa fa-minus"></span>&nbsp;${{ investment_result['loan_interst_first_year']|number_format('0','.',',') }}
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr data-toggle="collapse" data-target="#misc_title,#misc_value"
+                                class="danger accordion-toggle">
+                                <td class="danger" colspan="2">{% trans %}
+                                    investment_report.misc_fee_first_year{% endtrans %}:
+                                </td>
+                                <td class="danger">
+                                    <label><span
+                                                class="fa fa-minus"></span>&nbsp;${{ investment_result['misc_fee_yearly']|number_format('0','.',',') }}
+                                    </label>
+                                </td>
+                                <td class="danger">
+                                    <a class="btn btn-default btn-xs hidden-print"><span
+                                                class="fa fa-eye"></span></a>
+                                </td>
+                            </tr>
+                            <tr class="danger">
+                                <td colspan="2" class="danger hiddenRow">
+                                    <div class="accordian-body collapse" id="misc_title">
+                                        <label for="body_corp">
+                                            {% trans %}investment_calculator.body_corp{% endtrans %}&nbsp;:
+                                        </label>
+                                        <label for="council_rate">
+                                            {% trans %}investment_calculator.council_rate{% endtrans %}&nbsp;:
+                                        </label>
+                                        <label for="water_rate">
+                                            {% trans %}investment_calculator.water_rate{% endtrans %}&nbsp;:
+                                        </label>
+                                    </div>
+                                </td>
+                                <td colspan="2" class="danger hiddenRow">
+                                    <div class="accordian-body collapse" id="misc_value">
+                                        <label><span
+                                                    class="fa fa-minus"></span>&nbsp;&nbsp;${{ investment_result['body_corp']|number_format }}
+                                        </label>
+                                        <label><span
+                                                    class="fa fa-minus"></span>&nbsp;${{ investment_result['council_rate']|number_format }}
+                                        </label>
+                                        <label><span
+                                                    class="fa fa-minus"></span>&nbsp;${{ investment_result['water_rate']|number_format }}
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-toggle="collapse" data-target="#cashflow_title,#cashflow_value"
+                                class="info accordion-toggle">
+                                <td class="info" colspan="2">{% trans %}
+                                    investment_report.cashflow_first_year{% endtrans %}：
+                                </td>
+                                <td class="info">
+                                    {% if investment_result['cashflow_fisrt_year']>0 %}
+                                        <span class="fa fa-plus"></span>&nbsp;
+                                    {% else %}
+                                        <span class="fa fa-minus"></span>&nbsp;
+                                    {% endif %}
+                                    ${{ investment_result['cashflow_fisrt_year']|abs|number_format('0','.',',') }}
+                                </td>
+                                <td class="info">
+                                    <a class="btn btn-default btn-xs hidden-print"><span
+                                                class="fa fa-eye"></span></a>
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td colspan="2" class="info hiddenRow">
+                                    <div class="accordian-body collapse" id="cashflow_title">
+                                        <label for="cashflow_per_week">
+                                            {% trans %}investment_report.cashflow_per_week{% endtrans %}&nbsp;:
+                                        </label>
+                                    </div>
+                                </td>
+                                <td colspan="2" class="info hiddenRow">
+                                    <div class="accordian-body collapse" id="cashflow_value">
+                                        <label>
+                                            {% if investment_result['cashflow_fisrt_year']>0 %}
+                                                <span class="fa fa-plus"></span>&nbsp;
+                                            {% else %}
+                                                <span class="fa fa-minus"></span>&nbsp;
+                                            {% endif %}
+                                            ${{ (investment_result['cashflow_fisrt_year']/52)|abs| number_format('0',',','.') }}
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% if investment_result['year']<=1 %}
+                        <div id="remind_info" class="panel-body">
+                            <label><span class="fa fa-info-circle"></span>&nbsp;
+                                {% trans %}investment_report.info_advanced_report{% endtrans %}</label>
+                        </div>
+                    {% endif %}
+                    <div id="advancd_collapse" class="panel panel-default dd mb0">
+                        <a href="#advanced_report"
+                           class="panel-heading btn btn-block btn-lg align-left investment-report-header"
+                           data-toggle="collapse" data-parent="#accordion">
+                            <h3>{% trans %}investment_report.investment_analysis{% endtrans %}
+                                <span class="fa fa-angle-down pull-right"></span></h3>
+                        </a>
+                        <div id="advanced_report" class="panel-collapse collapse">
+                            <div class="panel-body advanced_report">
+                                <div class="panel-body">
+                                    <table class="table investment-report-table">
+                                        <tr>
+                                            <th colspan="4"><span>{% trans %}
+                                                    investment_calculator.investment_assumptions{% endtrans %}</span>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="property_price">{% trans %}
+                                                    investment_calculator.property_price{% endtrans %}: </label>
+                                            </td>
+                                            <td><label>${{ investment_result['price']|number_format }}</label></td>
+                                            <td><label for="loan_percentage">{% trans %}
+                                                    investment_calculator.loan_percentage{% endtrans %}: </label>
+                                            </td>
+                                            <td><label>{{ investment_result['loan_percentage'] }}%</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="loan_interest_rate">{% trans %}
+                                                    investment_calculator.loan_interest_rate{% endtrans %}: </label>
+                                            </td>
+                                            <td><label>{{ investment_result['loan_interest_rate'] }}%</label></td>
+                                            <td><label for="year">{% trans %}
+                                                    investment_calculator.count_year{% endtrans %}
+                                                    : </label></td>
+                                            <td><label>{{ investment_result['year'] }}&nbsp;{% trans %}
+                                                    investment_calculator.year{% endtrans %}</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="body_corp">{% trans %}
+                                                    investment_calculator.body_corp{% endtrans %}: </label></td>
+                                            <td><label>${{ investment_result['body_corp']|number_format }}</label>
+                                            </td>
+                                            <td><label for="legal_fee">{% trans %}
+                                                    investment_calculator.legal_fee{% endtrans %}： </label></td>
+                                            <td><label>${{ investment_result['legal_fee']|number_format }}</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="accounting_fee">{% trans %}
+                                                    investment_calculator.accounting_fee{% endtrans %}: </label>
+                                            </td>
+                                            <td>
+                                                <label>${{ investment_result['accounting_fee']|number_format }}</label>
+                                            </td>
+                                            <td><label for="council_rate">{% trans %}
+                                                    investment_calculator.council_rate{% endtrans %}: </label></td>
+                                            <td>
+                                                <label>${{ investment_result['council_rate']|number_format }}</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="stamp_duty">{% trans %}
+                                                    investment_calculator.stamp_duty{% endtrans %}+{% trans %}
+                                                    investment_calculator.firb_surcharge{% endtrans %}: </label></td>
+                                            <td><label>${{ investment_result['stamp_duty']|number_format }}
+                                                    + {{ investment_result['firb_surcharge']|number_format }}</label>
+                                            </td>
+                                            <td><label for="water_rate">{% trans %}
+                                                    investment_calculator.water_rate{% endtrans %}: </label></td>
+                                            <td><label>${{ investment_result['water_rate']|number_format }}</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="rent_weekly">{% trans %}
+                                                    investment_calculator.rent_weekly{% endtrans %}: </label></td>
+                                            <td><label>${{ investment_result['rent_weekly']|number_format }}</label>
+                                            </td>
+                                            <td><label for="annual_growth_rate">{% trans %}
+                                                    investment_calculator.annual_growth_rate{% endtrans %}: </label>
+                                            </td>
+                                            <td><label>{{ investment_result['annual_growth_rate'] }}%</label></td>
+                                        </tr>
+
+                                        <th colspan="4"><span>{% trans %}
+                                                investment_report.investment_result{% endtrans %}</span></th>
+
+                                        <tr data-toggle="collapse"
+                                            data-target="#total_expenses_title,#total_expenses_value"
+                                            class="danger accordion-toggle">
+                                            <td class="danger" colspan="2">
+                                                <label class="col-title" for="total_expenses">
+                                                    {% trans %}investment_report.total_expenses{% endtrans %}:
+                                                </label>
+                                            </td>
+                                            <td class="danger">
+                                                <label class="col-title">${{ investment_result['total_expenses']|number_format }}</label>
+                                            </td>
+                                            <td class="danger">
+                                                <a class="btn btn-default btn-xs hidden-print"><span
+                                                            class="fa fa-eye"></span></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="danger">
+                                            <td colspan="2" class="danger hiddenRow">
+                                                <div class="accordian-body collapse" id="total_expenses_title">
+                                                    <label for="out_of_pocket">
+                                                        {% trans %}investment_report.out_of_pocket{% endtrans %}:
+                                                    </label>
+                                                    <label for="total_loan_interest">
+                                                        {% trans %}
+                                                        investment_report.total_loan_interest{% endtrans %}:
+                                                    </label>
+                                                    <label class="sub-label" for="interest_per_week">
+                                                        {% trans %}investment_report.interest_per_week{% endtrans %}
+                                                        : </label>
+                                                    <label class="sub-label" for="interest_per_month">
+                                                        {% trans %}
+                                                        investment_report.interest_per_month{% endtrans %}
+                                                        : </label>
+                                                    <label for="total_loan">
+                                                        {% trans %}investment_report.total_loan{% endtrans %}:
+                                                    </label>
+                                                    <label for="misc_fee_total">{% trans %}
+                                                        investment_report.misc_fee_total{% endtrans %}： </label>
+                                                </div>
+                                            </td>
+                                            <td colspan="2" class="danger hiddenRow">
+                                                <div class="accordian-body collapse" id="total_expenses_value">
+                                                    <label>${{ investment_result['out_of_pocket']|number_format }}</label>
+                                                    <label>${{ investment_result['total_loan_interest']|number_format }}</label>
+                                                    <label class="sub-label">${{ investment_result['interest_per_week']|number_format }}</label>
+                                                    <label class="sub-label">${{ investment_result['interest_per_month']|number_format }}</label>
+                                                    <label>${{ investment_result['total_loan']|number_format }}</label>
+                                                    <label>${{ investment_result['misc_fee_total']|number_format }}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-toggle="collapse"
+                                            data-target="#total_income_title,#total_income_value"
+                                            class="success accordion-toggle">
+                                            <td class="success" colspan="2">
+                                                <label class="col-title" for="total_income">
+                                                    {% trans %}investment_report.total_income{% endtrans %}:
+                                                </label>
+                                            </td>
+                                            <td class="success" colspan="1">
+                                                <label class="col-title">${{ investment_result['total_income']|number_format }}</label>
+                                            </td>
+                                            <td class="success">
+                                                <a class="btn btn-default btn-xs hidden-print"><span
+                                                            class="fa fa-eye"></span></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="success">
+                                            <td colspan="2" class="success hiddenRow">
+                                                <div class="accordian-body collapse" id="total_income_title">
+                                                    <label for="rental_income_with_compound">
+                                                        {% trans %}
+                                                        investment_report.rental_income_with_compound{% endtrans %}
+                                                        &nbsp;({{ investment_result['year']~' '~'year'|trans }}):
+                                                    </label>
+                                                    <label class="sub-label" for="income_average_per_week">
+                                                        {% trans %}
+                                                        investment_report.income_average_per_week{% endtrans %}:
+                                                    </label>
+                                                    <label class="sub-label" for="income_average_per_month">
+                                                        {% trans %}
+                                                        investment_report.income_average_per_month{% endtrans %}:
+                                                    </label>
+                                                    <label for="est_market_value">
+                                                        {% trans %}investment_report.est_market_value{% endtrans %}
+                                                        &nbsp;({{ investment_result['year']~' '~'year_later'|trans }}
+                                                        ):
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td colspan="2" class="success hiddenRow">
+                                                <div class="accordian-body collapse" id="total_income_value">
+                                                    <label>${{ investment_result['rental_income_with_compound']|number_format }}</label>
+                                                    <label class="sub-label">${{ investment_result['income_average_per_week']|number_format }}</label>
+                                                    <label class="sub-label">${{ investment_result['income_average_per_month']|number_format }}</label>
+                                                    <label>${{ investment_result['est_market_value']|number_format }}</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-toggle="collapse" data-target="#summary_title,#summary_value"
+                                            class="info accordion-toggle">
+                                            <td class="info" colspan="2">
+                                                <label class="col-title" for="total_profit">
+                                                    {% trans %}investment_report.total_profit{% endtrans %}:
+                                                </label>
+                                            </td>
+                                            <td class="info">
+                                                <label class="col-title">${{ investment_result['total_profit']|number_format }}</label>
+                                            </td>
+                                            <td class="info">
+                                                <a class="btn btn-default btn-xs hidden-print"><span
+                                                            class="fa fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr class="info">
+                                            <td colspan="2" class="info hiddenRow">
+                                                <div class="accordian-body collapse" id="summary_title">
+                                                    <label for="total_return">
+                                                        {% trans %}investment_report.total_return{% endtrans %}:
+                                                    </label>
+                                                    <label class="sub-label" for="average_annual_return">
+                                                        {% trans %}
+                                                        investment_report.average_annual_return{% endtrans %}
+                                                        :
+                                                    </label>
+                                                    <label for="cashflow_per_year">
+                                                        {% trans %}investment_report.cashflow_per_year{% endtrans %}
+                                                        :
+                                                    </label>
+                                                    <label class="sub-label" for="cashflow_per_week">
+                                                        {% trans %}investment_report.cashflow_per_week{% endtrans %}
+                                                        :
+                                                    </label>
+                                                    <label for="cash_after_refinance">
+                                                        {% trans %}
+                                                        investment_report.cash_after_refinance{% endtrans %}
+                                                        &nbsp;({{ investment_result['year']~' '~'year_later'|trans }}
+                                                        ):
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td colspan="2" class="info hiddenRow">
+                                                <div class="accordian-body collapse" id="summary_value">
+                                                    <label>
+                                                        {{ investment_result['total_return']|number_format(1) }}%
+                                                    </label>
+                                                    <label class="sub-label">
+                                                        {{ investment_result['average_annual_return']|number_format(1) }}
+                                                        %
+                                                    </label>
+                                                    <label>
+                                                        $ {{ investment_result['cashflow_per_year']|number_format }}
+                                                    </label>
+                                                    <label class="sub-label">
+                                                        $ {{ investment_result['cashflow_per_week']|number_format }}
+                                                    </label>
+                                                    <label>
+                                                        $ {{ investment_result['cash_after_refinance']|number_format }}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="panel-heading investment-report-header"><h3>{% trans %}
+                                        investment_report.comparison_graphs{% endtrans %}</h3></div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <table class="table table-striped investment-report-table investment-report-details">
+                                                <tr>
+                                                    <th>{% trans %}investment_report.year{% endtrans %}</th>
+                                                    <th>{% trans %}
+                                                        investment_report.rental_income_per_year{% endtrans %}</th>
+                                                    <th>{% trans %}
+                                                        investment_report.property_value_per_year{% endtrans %}</th>
+                                                    <th>{% trans %}
+                                                        investment_report.total_return_year{% endtrans %}</th>
+                                                </tr>
+                                                {% for i in 0..investment_result['year']-1 %}
+                                                    <tr>
+                                                        <td>{{ "now"|date("Y")+i }}</td>
+                                                        <td>
+                                                            ${{ investment_result['rental_income_per_year'][i]|number_format('0','.',',') }}</td>
+                                                        <td>
+                                                            ${{ investment_result['property_value_per_year'][i]|number_format('0','.',',') }}</td>
+                                                        <td>{{ investment_result['total_return_year'][i]|number_format('2','.',',') }}
+                                                            %
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{% trans %}
+                                                    investment_report.rent_income_graph{% endtrans %}</div>
+                                                <div class="panel-body">
+                                                    <canvas id="rental_yearly_chart" height="232"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{% trans %}
+                                                    investment_report.property_value_graph{% endtrans %}</div>
+                                                <div class="panel-body">
+                                                    <canvas id="property_value_chart" height="232"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{% trans %}
+                                                    investment_report.investment_return_graph{% endtrans %}</div>
+                                                <div class="panel-body">
+                                                    <canvas id="total_return_chart" height="232"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">{% trans %}
+                                                    investment_report.investment_expanses_percentage_graph{% endtrans %}</div>
+                                                <div class="panel-body">
+                                                    <canvas id="expanse_percentage_chart" height="232"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p class="help-block" style="margin-top:20px">
+                            {% trans %}investment_calculator.disclaimer{% endtrans %}:<br/>
+                            {% trans %}investment_calculator.disclaimer_content{% endtrans %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> {% trans %}investment_report.refine_assumptions{% endtrans %} </h4>
+                </div>
+                {% if user is not null and property is defined %}
+                    {% set url= url('app_investment_report',{'property_id':property['id']}) %}
+                    {% set method = "post" %}
+                {% elseif property is defined and user is null %}
+                    {% set url= url('app_investment_report_share',{'property_id':property['id']}) %}
+                    {% set method = "get" %}
+                {% else %}
+                    {% set url= url('app_investment_report_public') %}
+                    {% set method = "post" %}
+                {% endif %}
+                <form role="form" action="{{ url }}" method="{{ method }}">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="property_price">{% trans %}
+                                    investment_calculator.property_price{% endtrans %}&nbsp;($)</label>
+                                {% if property is defined %}
+                                    <input id="price" class="form-control" name="price" type="number"
+                                           value="{{ property['price'] }}"
+                                           readonly="readonly">
+                                    <p class="help-block">{% trans %}
+                                        investment_calculator.property_price{% endtrans %}
+                                        ${{ property['price']|number_format }}</p>
+                                {% else %}
+                                    <input id="price" type="number" step="0.1" class="rent_weekly form-control"
+                                           name="price"
+                                           value="{{ investment_result['price'] }}" required>
+                                    <p class="help-block">{% trans %}
+                                        investment_calculator.property_price{% endtrans %}
+                                        {{ investment_result['price'] }}</p>
+                                {% endif %}
+
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="loan_percentage">{% trans %}
+                                    investment_calculator.loan_percentage{% endtrans %}&nbsp;(%)</label>
+                                <input class="form-control" name="loan_percentage" type="number" step="0.1"
+                                       value="{{ investment_result['loan_percentage'] }}">
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}&nbsp;50.0%</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="loan_interest_rate">{% trans %}
+                                    investment_calculator.loan_interest_rate{% endtrans %}&nbsp;(%)</label>
+                                <input class="form-control" type="number" step="0.1" name="loan_interest_rate"
+                                       value="{{ investment_result['loan_interest_rate'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}&nbsp;4.5%</p>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="year">{% trans %}
+                                    investment_calculator.count_year{% endtrans %}</label>
+                                <div class="calculator-line">
+                                    <button id="year_minus" type="button"
+                                            class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <span class="fa fa-minus"></span>
+                                    </button>
+                                    <input id="year" type="number"
+                                           class="calculator-input col-xs-8 col-sm-8 col-md-8 col-lg-8"
+                                           name="year" min="1" max="99" value='{{ investment_result['year'] }}'
+                                           required>
+                                    <button id="year_plus" type="button"
+                                            class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                                <p class="help-block" style="float:left">{% trans %}
+                                    investment_calculator.initial_set{% endtrans %}
+                                    &nbsp;1&nbsp;{% trans %}investment_calculator.year{% endtrans %}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="body_corp">{% trans %}investment_calculator.body_corp{% endtrans %}
+                                    &nbsp;($)</label>
+                                <div class="calculator-line">
+                                    <button id="body_corp_minus" field='body_corp' type="button"
+                                            class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <span class="fa fa-minus"></span>
+                                    </button>
+                                    <input id="body_corp" type="number" step="0.1"
+                                           class="calculator-input col-xs-8 col-sm-8 col-md-8 col-lg-8"
+                                           name="body_corp" value='{{ investment_result['body_corp'] }}' required>
+                                    <button id="body_corp_plus" field='body_corp' type="button"
+                                            class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                </div>
+                                <p class="help-block" style="float:left">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}
+                                    &nbsp;$3000&nbsp;{% trans %}investment_calculator.per_year{% endtrans %}</p>
+                            </div>
+                            {#0-6000#}
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="legal_fee">{% trans %}investment_calculator.legal_fee{% endtrans %}
+                                    &nbsp;($)</label>
+                                <input class="form-control" type="number" step="0.1" name="legal_fee"
+                                       value="{{ investment_result['legal_fee'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}&nbsp;$880</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="accounting_fee">{% trans %}
+                                    investment_calculator.accounting_fee{% endtrans %}&nbsp;($)</label>
+                                <input class="form-control" type="number" step="0.1" name="accounting_fee"
+                                       value="{{ investment_result['accounting_fee'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}&nbsp;$600&nbsp;</p>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="council_rate">{% trans %}
+                                    investment_calculator.council_rate{% endtrans %}&nbsp;($)</label>
+                                <input class="form-control" type="number" step="0.1" name="council_rate"
+                                       value="{{ investment_result['council_rate'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}
+                                    &nbsp;$1000&nbsp;{% trans %}investment_calculator.per_year{% endtrans %}</p>
+                            </div>
+                            {#800-2500#}</div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="stamp_duty">{% trans %}
+                                    investment_calculator.stamp_duty{% endtrans %}
+                                    &nbsp;($)</label>
+
+                                <table class="stamp-duty-table table">
+                                    <tbody>
+                                    <tr class="hidden radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.property_type{% endtrans %}</td>
+                                        <td>
+                                            <label>
+                                                <input class="stamp_duty_calcualte" type="radio"
+                                                       name="property_type"
+                                                       value="primary_residence">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.primary_residence{% endtrans %}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input class="stamp_duty_calcualte" type="radio"
+                                                       name="property_type"
+                                                       checked="checked"
+                                                       value="investment_property">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.investment_property{% endtrans %}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hidden radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.first_home{% endtrans %}
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input class="stamp_duty_calcualte" type="radio" name="first_home"
+                                                       value="yes">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.yes{% endtrans %}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input class="stamp_duty_calcualte" type="radio" name="first_home"
+                                                       checked="checked"
+                                                       value="no">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.no{% endtrans %}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.client_type{% endtrans %}</td>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="client_type"
+                                                        {{ investment_result['client_type'] =='firb'?'checked':'' }}
+                                                       value="firb">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.firb{% endtrans %}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="client_type"
+                                                        {{ investment_result['client_type'] =='local'?'checked':'' }}
+                                                       value="local">
+                                                <span class="fa fa-circle"></span>{% trans %}
+                                                investment_calculator.local{% endtrans %}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.state{% endtrans %}
+                                        </td>
+                                        <td colspan="2">
+                                            <label>
+                                                <input id="VIC" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='VIC'?'checked':'' }}
+                                                       value="VIC">
+                                                <span class="fa fa-circle"></span>VIC
+                                            </label>
+                                            <label>
+                                                <input id="NSW" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='NSW'?'checked':'' }}
+                                                       value="NSW">
+                                                <span class="fa fa-circle"></span>NSW
+                                            </label>
+                                            <label>
+                                                <input id="ACT" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='ACT'?'checked':'' }}
+                                                       value="ACT">
+                                                <span class="fa fa-circle"></span>ACT
+                                            </label>
+                                            <label>
+                                                <input id="QLD" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='QLD'?'checked':'' }}
+                                                       value="QLD">
+                                                <span class="fa fa-circle"></span>QLD
+                                            </label>
+                                            <label>
+                                                <input id="TAS" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='TAS'?'checked':'' }}
+                                                       value="TAS">
+                                                <span class="fa fa-circle"></span>TAS
+                                            </label>
+                                            <label>
+                                                <input id="WA" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='WA'?'checked':'' }}
+                                                       value="WA">
+                                                <span class="fa fa-circle"></span>WA
+                                            </label>
+                                            <label>
+                                                <input id="SA" class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                       type="radio" name="state"
+                                                        {{ investment_result['state'] =='SA'?'checked':'' }}
+                                                       value="SA">
+                                                <span class="fa fa-circle"></span>SA
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    {% if property is defined %}
+                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                            <td>
+                                                {% trans %}investment_calculator.stamp_duty{% endtrans %}&nbsp;($)
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="stamp_duty_form form-control" name="stamp_duty"
+                                                       type="number"
+                                                       step="0.1"
+                                                       value={{ property['stamp_duty']?property['stamp_duty']|number_format(0,'.',''): 3000 }} required>
+                                                <a id="stamp_duty_tooltips" class="fa fa-info-circle"
+                                                   data-toggle="tooltip"></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                            <td>
+                                                {% trans %}investment_calculator.firb_surcharge{% endtrans %}&nbsp;($)
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="stamp_duty_form form-control" name="firb_surcharge"
+                                                       type="number"
+                                                       step="0.1" required readonly>
+                                                <a class="fa fa-info-circle" data-toggle="tooltip"
+                                                   title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                            <td>
+                                                {% trans %}investment_calculator.stamp_duty{% endtrans %}&nbsp;($)
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="stamp_duty_form form-control" name="stamp_duty"
+                                                       type="number"
+                                                       step="0.1" value="3000" required>
+                                                <a id="stamp_duty_tooltips" class="fa fa-info-circle"
+                                                   data-toggle="tooltip"></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                            <td>
+                                                {% trans %}investment_calculator.firb_surcharge{% endtrans %}&nbsp;($)
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="stamp_duty_form form-control" name="firb_surcharge"
+                                                       type="number"
+                                                       step="0.1" required readonly>
+                                                <a class="fa fa-info-circle" data-toggle="tooltip"
+                                                   title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.stamp_duty_rule{% endtrans %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="water_rate">{% trans %}
+                                    investment_calculator.water_rate{% endtrans %}&nbsp;($)</label>
+                                <input class="form-control" type="number" step="0.1" name="water_rate"
+                                       value="{{ investment_result['water_rate'] }}">
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}
+                                    &nbsp;$700&nbsp;{% trans %}investment_calculator.per_year{% endtrans %}</p>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="rent_weekly">{% trans %}
+                                    investment_calculator.rent_weekly{% endtrans %}
+                                    &nbsp;($)</label>
+                                <input class="form-control" name="rent_weekly" type="number" step="1"
+                                       value="{{ investment_result['rent_weekly'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}
+                                    &nbsp;5%&nbsp;{% trans %}investment_calculator.property_price{% endtrans %}
+                                    {% trans %}investment_calculator.per_year{% endtrans %}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <label for="annual_growth_rate">{% trans %}
+                                    investment_calculator.annual_growth_rate{% endtrans %}&nbsp;(%)</label>
+                                <input class="form-control" min="0" name="annual_growth_rate" type="number" step="0.1"
+                                       value="{{ investment_result['annual_growth_rate'] }}" required>
+                                <p class="help-block">{% trans %}
+                                    investment_calculator.initial_estimation{% endtrans %}&nbsp;7%</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-green" type="submit">{% trans %}
+                                investment_calculator.accept_view_report{% endtrans %}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %} {% block javascripts %}
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('js/Chart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Chart.bundle.js') }}"></script>
+    <script type="text/javascript">
+        $('a').tooltip();
+        {% if property is defined %}
+        var price = {{ property['price']|raw }};
+        {% if property['stamp_duty'] %}
+        var vic_stamp_duty = {{ property['stamp_duty']|json_encode|raw }};
+        {% else %}
+        var vic_stamp_duty = 3000;
+        {% endif %}
+        {% else %}
+        var price = 400000;
+        $('#price').change(function () {
+            price = parseInt($(this).val());
+        })
+        var vic_stamp_duty = 3000;
+        {% endif %}
+        var years = {{ investment_result['year']|json_encode|raw }};
+        var rental_income_per_year ={{ investment_result['rental_income_per_year']|json_encode|raw }};
+        var property_value_per_year ={{ investment_result['property_value_per_year']|json_encode|raw }};
+        var total_return_year ={{ investment_result['total_return_year']|json_encode|raw }};
+        var total_return_year_average ={{ investment_result['total_return_year_average']|json_encode|raw }};
+        var out_of_pocket ={{ investment_result['out_of_pocket']|number_format('0','.','') }};
+        var total_loan ={{ investment_result['total_loan']|number_format('0','.','') }};
+        var total_loan_interest ={{ investment_result['total_loan_interest']|number_format('0','.','') }};
+        var misc_fee_total ={{ investment_result['misc_fee_total']|number_format('0','.','') }};
+        var total_expenses ={{ investment_result['total_expenses']|number_format('0','.','') }};
+        $("#apply_btn").click(function () {
+            $('#apply_msg').modal('show');
+            $('#apply_project').modal('hide');
+        });
+
+    </script>
+    <script type="text/javascript"
+            src="{{ asset('js/app-investment-calculator.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('js/app-stamp-duty-calculator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/infobox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.tagsinput.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fileinput.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app-investment-report.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app-stamp-duty-calculator.js') }}"></script>
+{% endblock %}

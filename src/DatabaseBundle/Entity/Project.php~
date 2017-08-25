@@ -1,0 +1,154 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: robert
+ * Date: 10/8/17
+ * Time: 4:14 PM
+ */
+
+namespace DatabaseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="ipx_sales_project")
+ */
+class Project
+{
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="projects")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     */
+    protected $account;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $suburb;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $availability;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable= true)
+     */
+    protected $min_price = 1;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable= true)
+     */
+    protected $max_price = 1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $front_image;
+
+    /**
+     * @ORM\Column(type="decimal", scale=6, nullable=true)
+     */
+    protected $longitude;
+
+    /**
+     * @ORM\Column(type="decimal", scale=6, nullable=true)
+     */
+    protected $latitude;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $timestamp;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trashed = false;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $beds;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $baths;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $cars;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $storges;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     */
+    protected $internal_area;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     */
+    protected $external_area;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     */
+    protected $land;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->timestamp = new \DateTime ();
+    }
+}
