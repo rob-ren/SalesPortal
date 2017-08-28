@@ -80,6 +80,7 @@ header:
   add: New
   explore: Explore
   profile: Profile
+  calculator: Calculator
   log_out: Log out
   log_in: Log in
   search_for: Search for houses, apartments...

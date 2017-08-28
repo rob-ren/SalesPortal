@@ -60,6 +60,12 @@
                     <span class="navLabel">{% trans %}header.explore{% endtrans %}</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ url('app_investment_calculator_public') }}">
+                    <span class="navIcon icon-calculator"></span>
+                    <span class="navLabel">{% trans %}header.calculator{% endtrans %}</span>
+                </a>
+            </li>
             {% if user['user_type']== constant('DatabaseBundle\\Enum\\AccountType::admin') %}
                 <li>
                     <a href="{{ path('app_add') }}">

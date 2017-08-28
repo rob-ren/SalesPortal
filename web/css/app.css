@@ -3834,7 +3834,8 @@ h1.pageTitle {
 
 .stamp_duty_form {
     display: inline;
-    width: 90%; }
+    width: 90%;
+}
 
 .stamp-duty-table > tbody > tr > td {
     min-width: 0px !important;
@@ -3845,7 +3846,8 @@ h1.pageTitle {
 }
 
 .radio-calculator label {
-    font-style: italic; }
+    font-style: italic;
+}
 
 .stamp-duty-calculator {
     display: inherit;
@@ -3857,6 +3859,266 @@ h1.pageTitle {
     /* real browsers */
     height: 100%;
     /* IE6: treaded as min-height*/
+}
+
+.calculator-container {
+    max-width: 1170px;
+    background-color: #fff;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.stamp-duty-calculator {
+    display: inherit;
+    margin-top: 5px !important;
+}
+
+.top-return-row {
+    margin-right: -10px;
+    margin-left: -10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.stamp-duty-table {
+    width: 100%;
+    max-width: 100%;
+}
+
+.stamp-duty-table > tbody > tr > td {
+    min-width: 0px !important;
+    width: 33%;
+    vertical-align: middle;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.radio-calculator label {
+    font-style: italic;
+}
+
+.gray-block {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #dfdfdf;
+}
+
+.calculator-table-container {
+    height: auto !important;
+    /* real browsers */
+    height: 100%;
+    /* IE6: treaded as min-height*/
+}
+
+.drop-down-calculator {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.calculator-input {
+    padding: 0 5px 0 5px;
+    display: inline;
+    height: 35px;
+    padding: 8px 14px;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #dfdfdf;
+}
+
+.disclaimer {
+    border: 1px solid #e5e5e5;
+    margin: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.disclaimer .help-block,
+.calculator-table-container .help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #aeb6bf;
+    font-size: 14px;
+    font-style: normal;
+}
+
+.disclaimer .help-block span,
+.calculator-table-container .help-block span {
+    color: #797f85;
+    font-weight: 700;
+}
+
+.calculator-line {
+    padding: 0;
+}
+
+.calculator-btn {
+    font-size: 14px !important;
+    border-radius: 0px !important;
+}
+
+.calculator-table-container h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.calculator-table-container span {
+    font-weight: 700;
+}
+
+.calculator-table-container h4 {
+    font-size: 16px;
+}
+
+.calculator-table-container h3 span {
+    float: right;
+}
+
+.calculator-table-container .panel-body .row img {
+    max-width: 100%;
+    max-height: 299px;
+    margin: 5px auto;
+    display: block;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-heading h3 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    line-height: 10px !important;
+    margin: 20px 0 10px 0 !important;
+    padding: 0 0 10px 0;
+}
+
+.panel-heading > .dropdown .dropdown-toggle {
+    color: inherit;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+.stamp_duty_form {
+    display: inline;
+    width: 90%;
+}
+
+.calculator-table-container .link-btn {
+    float: left;
+    margin-left: 10px;
+}
+
+.investment-report-table .danger {
+    border-bottom: 1px solid #f2dede !important;
+}
+
+.investment-report-table .success {
+    border-bottom: 1px solid #dff0d8 !important;
+}
+
+.investment-report-table .info {
+    border-bottom: 1px solid #d9edf7 !important;
+}
+
+.investment-report-header {
+    border-radius: 0;
+    background-color: #21282d !important;
+}
+
+.investment-report-header h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.investment-report-table > tbody > tr > th {
+    text-align: center;
+    font-size: 18px;
+    color: #21282d;
+    font-weight: 700;
+    line-height: 1.1;
+    background-color: #f5f5f5;
+}
+
+.hiddenRow {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.accordion-toggle:hover {
+    cursor: pointer;
+}
+
+.investment-report-table > tbody > tr > td {
+    min-width: 0px !important;
+    vertical-align: middle;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.investment-report-table label {
+    display: block !important;
+    font-weight: 500;
+}
+
+.investment-report-table .sub-label {
+    font-weight: 500;
+    margin-left: 7px;
+    font-size: 11px;
+}
+
+.col-title {
+    font-size: 16px;
+    font-weight: 700 !important;
+}
+
+.investment-report-table button {
+    /*margin-right:-32px;*/
+}
+
+.investment-report-details {
+    text-align: center;
+    margin-bottom: 15px !important;
+}
+
+.advanced_report {
+    padding: 0px;
+}
+
+.success-dark {
+    background-color: rgba(178, 219, 161, 0.5);
 }
 
 .cal .clndr .clndr-table {
@@ -4730,10 +4992,11 @@ li.list-ns-collapsed.list-ns-hovering div {
     transition: all .2s ease-in-out;
 }
 
-.investment-calculator input{
+.investment-calculator input {
     position: absolute;
     left: -9999em;
 }
+
 .investment-calculator span {
     background-color: #fff;
     border: 1px solid #999;
@@ -4748,6 +5011,7 @@ li.list-ns-collapsed.list-ns-hovering div {
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
 }
+
 .investment-calculator span {
     border-radius: 50%;
     line-height: 9px;
@@ -6279,6 +6543,60 @@ blockquote {
         -webkit-transition: none;
         -o-transition: none;
         transition: none;
+    }
+
+    .btn, .btn-solid-green, .btn-trans-green, .btn-solid-lemon, .btn-trans-lemon {
+        font-size: 10px;
+    }
+
+    .home-nav .headerUserName {
+        display: inline-block;
+        padding: 10px 11px 10px 11px;
+    }
+
+    .panel.dd .panel-body {
+        font-size: 10px;
+    }
+
+    .top-return-row {
+        margin-right: -10px;
+        margin-left: -10px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    #remind_info label {
+        font-size: 10px;
+    }
+
+    .calculator-table-container .help-block {
+        font-size: 10px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .calculator-table-container h3 {
+        font-size: 11px;
+    }
+
+    .calculator-table-container h4 {
+        font-size: 9px;
+    }
+
+    .investment-report-table label {
+        font-size: 10px;
+        min-height: 22px;
+        margin-top: 9px;
+    }
+
+    .investment-report-table .sub-label {
+        font-size: 9px;
+    }
+
+    .investment-report-table > tbody > tr > th {
+        font-size: 11px;
     }
 
     #header {

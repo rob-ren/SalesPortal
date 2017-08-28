@@ -82,6 +82,7 @@ header:
   add: 发布
   explore: 搜索
   profile: 用户信息
+  calculator: 计算器
   log_out: 登出
   log_in: 登录
   search_for: 搜索别墅，公寓...

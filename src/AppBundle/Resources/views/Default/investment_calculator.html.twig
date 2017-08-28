@@ -7,403 +7,428 @@
         international_property_exchange_centre{% endtrans %} </title>
 {% endblock %}
 {% block body %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}"/>
     <!-- Content -->
     <div id="wrapper" class="full">
         <div id="mapView" class="min">
             <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
         </div>
         <div id="content" class="max">
-            <div class="tables">
-                <h2 class="page-title">{% trans %}investment_calculator.investment_calculator{% endtrans %}</h2>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                {% trans %}investment_calculator.investment_assumptions{% endtrans %}
-                            </div>
-                            <div class="panel-body">
-                                {% if property is defined %}
-                                    {% set url= url('app_investment_report',{'property_id':property['id']}) %}
-                                {% else %}
-                                    {% set url= url('app_investment_report_public') %}
-                                {% endif %}
-                                <form role="form" action="{{ url }}" method="post">
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="property_price">{% trans %}
-                                                investment_calculator.property_price{% endtrans %}&nbsp;($)</label>
-                                            {% if property is defined %}
-                                                <input id="price" class="form-control" name="price"
-                                                       value="{{ property['price'] }}"
-                                                       readonly="readonly">
-                                                <p class="help-block">{% trans %}
-                                                    investment_calculator.property_price{% endtrans %}
-                                                    ${{ property['price']|number_format }}</p>
-                                            {% else %}
-                                                <input id="price" type="number"
-                                                       class="rent_weekly stamp_duty_calcualte form-control"
-                                                       name="price" value="400000"
-                                                       required>
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="loan_percentage">{% trans %}
-                                                investment_calculator.loan_percentage{% endtrans %}&nbsp;(%)</label>
-                                            <input class="form-control" type="number" step="0.1" name="loan_percentage"
-                                                   value="50.0">
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}&nbsp;50.0%</p>
-                                        </div>
+            <div class="calculator-container">
+                <div class="calculator-table-container">
+                    <div class="tables">
+                        <h2 class="page-title">{% trans %}investment_calculator.investment_calculator{% endtrans %}</h2>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel panel-default calculator-container">
+                                    <div class="panel-heading">
+                                        {% trans %}investment_calculator.investment_assumptions{% endtrans %}
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="loan_interest_rate">{% trans %}
-                                                investment_calculator.loan_interest_rate{% endtrans %}&nbsp;(%)</label>
-                                            <input class="form-control" type="number" step="0.1"
-                                                   name="loan_interest_rate"
-                                                   value="4.5"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}&nbsp;4.5%</p>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="year">{% trans %}
-                                                investment_calculator.count_year{% endtrans %}</label>
-                                            <div class="calculator-line">
-                                                <button id="year_minus" type="button"
-                                                        class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                                                    <span class="fa fa-minus"></span>
-                                                </button>
-                                                <input id="year" type="number" min="1" max="99"
-                                                       class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
-                                                       name="year" value='1' required>
-                                                <button id="year_plus" type="button"
-                                                        class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                                                    <span class="fa fa-plus"></span>
-                                                </button>
+                                    <div class="panel-body">
+                                        {% if property is defined %}
+                                            {% set url= url('app_investment_report',{'property_id':property['id']}) %}
+                                        {% else %}
+                                            {% set url= url('app_investment_report_public') %}
+                                        {% endif %}
+                                        <form role="form" action="{{ url }}" method="post">
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="property_price">{% trans %}
+                                                        investment_calculator.property_price{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    {% if property is defined %}
+                                                        <input id="price" class="form-control" name="price"
+                                                               value="{{ property['price'] }}"
+                                                               readonly="readonly">
+                                                        <p class="help-block">{% trans %}
+                                                            investment_calculator.property_price{% endtrans %}
+                                                            ${{ property['price']|number_format }}</p>
+                                                    {% else %}
+                                                        <input id="price" type="number"
+                                                               class="rent_weekly stamp_duty_calcualte form-control"
+                                                               name="price" value="400000"
+                                                               required>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="loan_percentage">{% trans %}
+                                                        investment_calculator.loan_percentage{% endtrans %}
+                                                        &nbsp;(%)</label>
+                                                    <input class="form-control" type="number" step="0.1"
+                                                           name="loan_percentage"
+                                                           value="50.0">
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}&nbsp;50.0%</p>
+                                                </div>
                                             </div>
-                                            <br/>
-                                            <p class="help-block" style=" float:left">{% trans %}
-                                                investment_calculator.initial_set{% endtrans %}
-                                                &nbsp;1&nbsp;{% trans %}investment_calculator.year{% endtrans %}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="body_corp">{% trans %}
-                                                investment_calculator.body_corp{% endtrans %}
-                                                &nbsp;($)</label>
-                                            <div class="calculator-line">
-                                                <button id="body_corp_minus" field='body_corp' type="button"
-                                                        class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                                                    <span class="fa fa-minus"></span>
-                                                </button>
-                                                {% if property is defined %}
-                                                    <input id="body_corp" type="number"
-                                                           class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
-                                                           name="body_corp"
-                                                           value={{ property['owner_crop']!=0?property['owner_crop']|number_format(0,'.',''): 3000 }} required>
-                                                {% else %}
-                                                    <input id="body_corp" type="number"
-                                                           class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
-                                                           name="body_corp"
-                                                           value='2500' required>
-                                                {% endif %}
-                                                <button id="body_corp_plus" field='body_corp' type="button"
-                                                        class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                                                    <span class="fa fa-plus"></span>
-                                                </button>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="loan_interest_rate">{% trans %}
+                                                        investment_calculator.loan_interest_rate{% endtrans %}
+                                                        &nbsp;(%)</label>
+                                                    <input class="form-control" type="number" step="0.1"
+                                                           name="loan_interest_rate"
+                                                           value="4.5"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;4.5%</p>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="year">{% trans %}
+                                                        investment_calculator.count_year{% endtrans %}</label>
+                                                    <div class="calculator-line">
+                                                        <button id="year_minus" type="button"
+                                                                class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                                                            <span class="fa fa-minus"></span>
+                                                        </button>
+                                                        <input id="year" type="number" min="1" max="99"
+                                                               class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
+                                                               name="year" value='1' required>
+                                                        <button id="year_plus" type="button"
+                                                                class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                                                            <span class="fa fa-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                    <br/>
+                                                    <p class="help-block" style=" float:left">{% trans %}
+                                                        investment_calculator.initial_set{% endtrans %}
+                                                        &nbsp;1&nbsp;{% trans %}
+                                                        investment_calculator.year{% endtrans %}</p>
+                                                </div>
                                             </div>
-                                            <p class="help-block" style=" float:left">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}
-                                                &nbsp;$2500&nbsp;{% trans %}
-                                                investment_calculator.per_year{% endtrans %}</p>
-                                        </div>
-                                        {#0-6000#}
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="legal_fee">{% trans %}
-                                                investment_calculator.legal_fee{% endtrans %}
-                                                &nbsp;($)</label>
-                                            <input class="form-control" type="number" name="legal_fee" value="880"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}&nbsp;$880</p>
-                                        </div>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="body_corp">{% trans %}
+                                                        investment_calculator.body_corp{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    <div class="calculator-line">
+                                                        <button id="body_corp_minus" field='body_corp' type="button"
+                                                                class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                                                            <span class="fa fa-minus"></span>
+                                                        </button>
+                                                        {% if property is defined %}
+                                                            <input id="body_corp" type="number"
+                                                                   class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
+                                                                   name="body_corp"
+                                                                   value={{ property['owner_crop']!=0?property['owner_crop']|number_format(0,'.',''): 3000 }} required>
+                                                        {% else %}
+                                                            <input id="body_corp" type="number"
+                                                                   class="calculator-input col-xs-8 col-sm-8 col-md-10 col-lg-10"
+                                                                   name="body_corp"
+                                                                   value='2500' required>
+                                                        {% endif %}
+                                                        <button id="body_corp_plus" field='body_corp' type="button"
+                                                                class="calculator-btn btn btn-gray col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                                                            <span class="fa fa-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                    <p class="help-block" style=" float:left">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;$2500&nbsp;{% trans %}
+                                                        investment_calculator.per_year{% endtrans %}</p>
+                                                </div>
+                                                {#0-6000#}
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="legal_fee">{% trans %}
+                                                        investment_calculator.legal_fee{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    <input class="form-control" type="number" name="legal_fee"
+                                                           value="880"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;$880</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="accounting_fee">{% trans %}
+                                                        investment_calculator.accounting_fee{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    <input class="form-control" type="number" name="accounting_fee"
+                                                           value="600"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;$600&nbsp;</p>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="council_rate">{% trans %}
+                                                        investment_calculator.council_rate{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    <input class="form-control" type="number" name="council_rate"
+                                                           value="1000"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;$1000&nbsp;{% trans %}
+                                                        investment_calculator.per_year{% endtrans %}</p>
+                                                </div>{#800-2500#}
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <table class="stamp-duty-table table">
+                                                        <tbody>
+                                                        <tr class="hidden radio custom-radio stamp-duty-calculator">
+                                                            <td>
+                                                                {% trans %}
+                                                                investment_calculator.property_type{% endtrans %}</td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="stamp_duty_calcualte" type="radio"
+                                                                           name="property_type"
+                                                                           value="primary_residence">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.primary_residence{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="stamp_duty_calcualte" type="radio"
+                                                                           name="property_type"
+                                                                           checked="checked"
+                                                                           value="investment_property">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.investment_property{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="hidden radio custom-radio stamp-duty-calculator">
+                                                            <td>
+                                                                {% trans %}
+                                                                investment_calculator.first_home{% endtrans %}
+                                                            </td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="stamp_duty_calcualte" type="radio"
+                                                                           name="first_home"
+                                                                           value="yes">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.yes{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="stamp_duty_calcualte" type="radio"
+                                                                           name="first_home"
+                                                                           checked="checked"
+                                                                           value="no">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.no{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                                            <td>
+                                                                {% trans %}
+                                                                investment_calculator.client_type{% endtrans %}
+                                                            </td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="firb_surcharge_calcualte" type="radio"
+                                                                           name="client_type"
+                                                                           checked="checked" value="firb">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.firb{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label>
+                                                                    <input class="firb_surcharge_calcualte" type="radio"
+                                                                           name="client_type"
+                                                                           value="local">
+                                                                    <span class="fa fa-circle"></span>{% trans %}
+                                                                    investment_calculator.local{% endtrans %}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="radio custom-radio stamp-duty-calculator">
+                                                            <td>
+                                                                {% trans %}investment_calculator.state{% endtrans %}
+                                                            </td>
+                                                            <td colspan="2">
+                                                                <label>
+                                                                    <input id="VIC"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='VIC'?'checked':'' }}
+                                                                           value="VIC">
+                                                                    <span class="fa fa-circle"></span>VIC
+                                                                </label>
+                                                                <label>
+                                                                    <input id="NSW"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='NSW'?'checked':'' }}
+                                                                           value="NSW">
+                                                                    <span class="fa fa-circle"></span>NSW
+                                                                </label>
+                                                                <label>
+                                                                    <input id="ACT"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='ACT'?'checked':'' }}
+                                                                           value="ACT">
+                                                                    <span class="fa fa-circle"></span>ACT
+                                                                </label>
+                                                                <label>
+                                                                    <input id="QLD"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='QLD'?'checked':'' }}
+                                                                           value="QLD">
+                                                                    <span class="fa fa-circle"></span>QLD
+                                                                </label>
+                                                                <label>
+                                                                    <input id="TAS"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='TAS'?'checked':'' }}
+                                                                           value="TAS">
+                                                                    <span class="fa fa-circle"></span>TAS
+                                                                </label>
+                                                                <label>
+                                                                    <input id="WA"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='WA'?'checked':'' }}
+                                                                           value="WA">
+                                                                    <span class="fa fa-circle"></span>WA
+                                                                </label>
+                                                                <label>
+                                                                    <input id="SA"
+                                                                           class="firb_surcharge_calcualte stamp_duty_calcualte"
+                                                                           type="radio"
+                                                                           name="state"
+                                                                            {{ property is defined and project['state']=='SA'?'checked':'' }}
+                                                                           value="SA">
+                                                                    <span class="fa fa-circle"></span>SA
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        {% if property is defined %}
+                                                            <tr class="radio custom-radio stamp-duty-calculator">
+                                                                <td>
+                                                                    {% trans %}
+                                                                    investment_calculator.stamp_duty{% endtrans %}
+                                                                    &nbsp;($)
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input class="stamp_duty_form form-control"
+                                                                           name="stamp_duty"
+                                                                           type="number"
+                                                                           step="1"
+                                                                           value={{ property['stamp_duty']?property['stamp_duty']|number_format(0,'.',''): 3000 }} required>
+                                                                    <a id="stamp_duty_tooltips"
+                                                                       class="fa fa-info-circle"
+                                                                       data-toggle="tooltip"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="radio custom-radio stamp-duty-calculator">
+                                                                <td>
+                                                                    {% trans %}
+                                                                    investment_calculator.firb_surcharge{% endtrans %}
+                                                                    &nbsp;($)
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input class="stamp_duty_form form-control"
+                                                                           name="firb_surcharge" type="number"
+                                                                           step="1" required readonly>
+                                                                    <a class="fa fa-info-circle" data-toggle="tooltip"
+                                                                       title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% else %}
+                                                            <tr class="radio custom-radio stamp-duty-calculator">
+                                                                <td>
+                                                                    {% trans %}
+                                                                    investment_calculator.stamp_duty{% endtrans %}
+                                                                    &nbsp;($)
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input class="stamp_duty_form form-control"
+                                                                           name="stamp_duty"
+                                                                           type="number"
+                                                                           step="1" value="0" required>
+                                                                    <a id="stamp_duty_tooltips"
+                                                                       class="fa fa-info-circle"
+                                                                       data-toggle="tooltip"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="radio custom-radio stamp-duty-calculator">
+                                                                <td>
+                                                                    {% trans %}
+                                                                    investment_calculator.firb_surcharge{% endtrans %}
+                                                                    &nbsp;($)
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input class="stamp_duty_form form-control"
+                                                                           name="firb_surcharge" type="number"
+                                                                           step="1" required readonly>
+                                                                    <a class="fa fa-info-circle" data-toggle="tooltip"
+                                                                       title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                        </tbody>
+                                                    </table>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.stamp_duty_rule{% endtrans %}
+                                                    </p>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="water_rate">{% trans %}
+                                                        investment_calculator.water_rate{% endtrans %}&nbsp;($)</label>
+                                                    <input class="form-control" type="number" name="water_rate"
+                                                           value="700">
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;$700&nbsp;{% trans %}
+                                                        investment_calculator.per_year{% endtrans %}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="rent_weekly">{% trans %}
+                                                        investment_calculator.rent_weekly{% endtrans %}
+                                                        &nbsp;($)</label>
+                                                    <input class="form-control" type="number" step="1"
+                                                           name="rent_weekly"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;5%&nbsp;{% trans %}
+                                                        investment_calculator.property_price{% endtrans %}
+                                                        {% trans %}investment_calculator.per_year{% endtrans %}</p>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <label for="annual_growth_rate">{% trans %}
+                                                        investment_calculator.annual_growth_rate{% endtrans %}
+                                                        &nbsp;(%)</label>
+                                                    <input class="form-control" min="0" type="number" step="0.1"
+                                                           name="annual_growth_rate"
+                                                           value="7"
+                                                           required>
+                                                    <p class="help-block">{% trans %}
+                                                        investment_calculator.initial_estimation{% endtrans %}
+                                                        &nbsp;7%</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-green" type="submit">{% trans %}
+                                                investment_calculator.accept_view_report{% endtrans %}</button>
+                                        </form>
+                                        <p class="help-block" style="margin-top:20px">
+                                            {% trans %}investment_calculator.disclaimer{% endtrans %}:<br/>
+                                            {% trans %}investment_calculator.disclaimer_content{% endtrans %}
+                                        </p>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accounting_fee">{% trans %}
-                                                investment_calculator.accounting_fee{% endtrans %}&nbsp;($)</label>
-                                            <input class="form-control" type="number" name="accounting_fee" value="600"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}
-                                                &nbsp;$600&nbsp;</p>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="council_rate">{% trans %}
-                                                investment_calculator.council_rate{% endtrans %}&nbsp;($)</label>
-                                            <input class="form-control" type="number" name="council_rate" value="1000"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}
-                                                &nbsp;$1000&nbsp;{% trans %}
-                                                investment_calculator.per_year{% endtrans %}</p>
-                                        </div>{#800-2500#}
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <table class="stamp-duty-table table">
-                                                <tbody>
-                                                <tr class="hidden radio custom-radio stamp-duty-calculator">
-                                                    <td>
-                                                        {% trans %}
-                                                        investment_calculator.property_type{% endtrans %}</td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="stamp_duty_calcualte" type="radio"
-                                                                   name="property_type"
-                                                                   value="primary_residence">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.primary_residence{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="stamp_duty_calcualte" type="radio"
-                                                                   name="property_type"
-                                                                   checked="checked"
-                                                                   value="investment_property">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.investment_property{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr class="hidden radio custom-radio stamp-duty-calculator">
-                                                    <td>
-                                                        {% trans %}investment_calculator.first_home{% endtrans %}
-                                                    </td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="stamp_duty_calcualte" type="radio"
-                                                                   name="first_home"
-                                                                   value="yes">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.yes{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="stamp_duty_calcualte" type="radio"
-                                                                   name="first_home"
-                                                                   checked="checked"
-                                                                   value="no">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.no{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr class="radio custom-radio stamp-duty-calculator">
-                                                    <td>
-                                                        {% trans %}investment_calculator.client_type{% endtrans %}
-                                                    </td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="firb_surcharge_calcualte" type="radio"
-                                                                   name="client_type"
-                                                                   checked="checked" value="firb">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.firb{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label>
-                                                            <input class="firb_surcharge_calcualte" type="radio"
-                                                                   name="client_type"
-                                                                   value="local">
-                                                            <span class="fa fa-circle"></span>{% trans %}
-                                                            investment_calculator.local{% endtrans %}
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                <tr class="radio custom-radio stamp-duty-calculator">
-                                                    <td>
-                                                        {% trans %}investment_calculator.state{% endtrans %}
-                                                    </td>
-                                                    <td colspan="2">
-                                                        <label>
-                                                            <input id="VIC"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='VIC'?'checked':'' }}
-                                                                   value="VIC">
-                                                            <span class="fa fa-circle"></span>VIC
-                                                        </label>
-                                                        <label>
-                                                            <input id="NSW"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='NSW'?'checked':'' }}
-                                                                   value="NSW">
-                                                            <span class="fa fa-circle"></span>NSW
-                                                        </label>
-                                                        <label>
-                                                            <input id="ACT"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='ACT'?'checked':'' }}
-                                                                   value="ACT">
-                                                            <span class="fa fa-circle"></span>ACT
-                                                        </label>
-                                                        <label>
-                                                            <input id="QLD"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='QLD'?'checked':'' }}
-                                                                   value="QLD">
-                                                            <span class="fa fa-circle"></span>QLD
-                                                        </label>
-                                                        <label>
-                                                            <input id="TAS"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='TAS'?'checked':'' }}
-                                                                   value="TAS">
-                                                            <span class="fa fa-circle"></span>TAS
-                                                        </label>
-                                                        <label>
-                                                            <input id="WA"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='WA'?'checked':'' }}
-                                                                   value="WA">
-                                                            <span class="fa fa-circle"></span>WA
-                                                        </label>
-                                                        <label>
-                                                            <input id="SA"
-                                                                   class="firb_surcharge_calcualte stamp_duty_calcualte"
-                                                                   type="radio"
-                                                                   name="state"
-                                                                    {{ property is defined and project['state']=='SA'?'checked':'' }}
-                                                                   value="SA">
-                                                            <span class="fa fa-circle"></span>SA
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                {% if property is defined %}
-                                                    <tr class="radio custom-radio stamp-duty-calculator">
-                                                        <td>
-                                                            {% trans %}investment_calculator.stamp_duty{% endtrans %}
-                                                            &nbsp;($)
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <input class="stamp_duty_form form-control"
-                                                                   name="stamp_duty"
-                                                                   type="number"
-                                                                   step="1"
-                                                                   value={{ property['stamp_duty']?property['stamp_duty']|number_format(0,'.',''): 3000 }} required>
-                                                            <a id="stamp_duty_tooltips" class="fa fa-info-circle"
-                                                               data-toggle="tooltip"></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="radio custom-radio stamp-duty-calculator">
-                                                        <td>
-                                                            {% trans %}
-                                                            investment_calculator.firb_surcharge{% endtrans %}
-                                                            &nbsp;($)
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <input class="stamp_duty_form form-control"
-                                                                   name="firb_surcharge" type="number"
-                                                                   step="1" required readonly>
-                                                            <a class="fa fa-info-circle" data-toggle="tooltip"
-                                                               title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
-                                                        </td>
-                                                    </tr>
-                                                {% else %}
-                                                    <tr class="radio custom-radio stamp-duty-calculator">
-                                                        <td>
-                                                            {% trans %}investment_calculator.stamp_duty{% endtrans %}
-                                                            &nbsp;($)
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <input class="stamp_duty_form form-control"
-                                                                   name="stamp_duty"
-                                                                   type="number"
-                                                                   step="1" value="0" required>
-                                                            <a id="stamp_duty_tooltips" class="fa fa-info-circle"
-                                                               data-toggle="tooltip"></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="radio custom-radio stamp-duty-calculator">
-                                                        <td>
-                                                            {% trans %}
-                                                            investment_calculator.firb_surcharge{% endtrans %}
-                                                            &nbsp;($)
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <input class="stamp_duty_form form-control"
-                                                                   name="firb_surcharge" type="number"
-                                                                   step="1" required readonly>
-                                                            <a class="fa fa-info-circle" data-toggle="tooltip"
-                                                               title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
-                                                        </td>
-                                                    </tr>
-                                                {% endif %}
-                                                </tbody>
-                                            </table>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.stamp_duty_rule{% endtrans %}
-                                            </p>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="water_rate">{% trans %}
-                                                investment_calculator.water_rate{% endtrans %}&nbsp;($)</label>
-                                            <input class="form-control" type="number" name="water_rate" value="700">
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}
-                                                &nbsp;$700&nbsp;{% trans %}
-                                                investment_calculator.per_year{% endtrans %}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="rent_weekly">{% trans %}
-                                                investment_calculator.rent_weekly{% endtrans %}
-                                                &nbsp;($)</label>
-                                            <input class="form-control" type="number" step="1" name="rent_weekly"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}
-                                                &nbsp;5%&nbsp;{% trans %}
-                                                investment_calculator.property_price{% endtrans %}
-                                                {% trans %}investment_calculator.per_year{% endtrans %}</p>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <label for="annual_growth_rate">{% trans %}
-                                                investment_calculator.annual_growth_rate{% endtrans %}&nbsp;(%)</label>
-                                            <input class="form-control" min="0" type="number" step="0.1"
-                                                   name="annual_growth_rate"
-                                                   value="7"
-                                                   required>
-                                            <p class="help-block">{% trans %}
-                                                investment_calculator.initial_estimation{% endtrans %}&nbsp;7%</p>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-green" type="submit">{% trans %}
-                                        investment_calculator.accept_view_report{% endtrans %}</button>
-                                </form>
-                                <p class="help-block" style="margin-top:20px">
-                                    {% trans %}investment_calculator.disclaimer{% endtrans %}:<br/>
-                                    {% trans %}investment_calculator.disclaimer_content{% endtrans %}
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -412,8 +437,6 @@
         </div>
     </div>
 {% endblock %} {% block javascripts %}
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places"
-            type="text/javascript"></script>
     <script type="text/javascript">
         $('a').tooltip();
         {% if property is defined %}
@@ -438,7 +461,6 @@
             src="{{ asset('js/app-investment-calculator.js') }}"></script>
     <script type="text/javascript"
             src="{{ asset('js/app-stamp-duty-calculator.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/infobox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.tagsinput.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/fileinput.min.js') }}"></script>
