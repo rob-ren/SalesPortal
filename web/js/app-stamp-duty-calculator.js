@@ -212,8 +212,8 @@ function stampDutypCalculation() {
     if (!bracket) {
         throw new Error('Could not find the tax bracket for ' + price);
     }
-    var stamp_duty_tooltips= "dd";
-    //var stamp_duty_tooltips= Translator.trans('stamp_duty.tooltips');
+    //var stamp_duty_tooltips= "dd";
+    var stamp_duty_tooltips= Translator.trans('stamp_duty.tooltips');
 
     if (states == 'NSW' && first_home == 'yes' && property_type == 'primary_residence' && bracket.max == 650000 && bracket.min == 550000) {
         var result = bracket.base + price * bracket.rate / 100;

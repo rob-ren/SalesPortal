@@ -75,8 +75,7 @@ var format_rental_income_per_year = [];
 var format_rental_income_per_year_title = [];
 var today = new Date();
 var year = today.getFullYear();
-//var title_rental_income = Translator.trans('barchart.title_rent_income');
-var title_rental_income = 'barchart.title_rent_income';
+var title_rental_income = Translator.trans('barchart.title_rent_income');
 // start draw chart rental_yearly and property value
 var ctx_rental_year = document.getElementById("rental_yearly_chart");
 for (var i = 0; i < rental_income_per_year.length; i++) {
@@ -125,10 +124,8 @@ var rental_year_chart = new Chart(ctx_rental_year, {
 var format_property_value_per_year = [];
 var format_property_value_per_year_title = [];
 var format_loan_value_per_year = [];
-//var title_property_value = Translator.trans('barchart.title_property_value');
-//var title_loan_value = Translator.trans('barchart.title_total_loan');
-var title_property_value = 'barchart.title_property_value';
-var title_loan_value = 'barchart.title_total_loan';
+var title_property_value = Translator.trans('barchart.title_property_value');
+var title_loan_value = Translator.trans('barchart.title_total_loan');
 var ctx_property_value = document.getElementById("property_value_chart");
 for (var i = 0; i < property_value_per_year.length; i++) {
     var format_property_value_value = property_value_per_year[i].toFixed(0);
@@ -201,15 +198,13 @@ var total_return_chart = new Chart(ctx_total_return, {
     data: {
         labels: format_total_return_year_title,
         datasets: [{
-            //label: Translator.trans('barchart.title_total_return'),
-            label:'barchart.title_total_return',
+            label: Translator.trans('barchart.title_total_return'),
             data: format_total_return_year,
             backgroundColor: 'rgba(15,218,249,0.2)',
             borderColor: 'rgba(15,218,249,1)',
             borderWidth: 1
         }, {
-            //label: Translator.trans('barchart.title_annual_return'),
-            label: 'barchart.title_annual_return',
+            label: Translator.trans('barchart.title_annual_return'),
             data: format_total_return_year_average,
             backgroundColor: 'rgba(15,249,116,0.2)',
             borderColor: 'rgba(15,249,116, 1)',
@@ -253,14 +248,10 @@ var expanse_percentage_chart = new Chart(ctx_expanse_percentage, {
     type: 'pie',
     data: {
         labels: [
-            // Translator.trans('barchart.title_out_of_pocket'),
-            // Translator.trans('barchart.title_total_loan'),
-            // Translator.trans('barchart.title_total_loan_interest'),
-            // Translator.trans('barchart.title_misc_fee_total'),
-            'barchart.title_out_of_pocket',
-            'barchart.title_total_loan',
-            'barchart.title_total_loan_interest',
-            'barchart.title_misc_fee_total',
+             Translator.trans('barchart.title_out_of_pocket'),
+             Translator.trans('barchart.title_total_loan'),
+             Translator.trans('barchart.title_total_loan_interest'),
+             Translator.trans('barchart.title_misc_fee_total'),
         ],
         datasets: [{
             data: [

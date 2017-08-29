@@ -67,3 +67,15 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+
+# Bazinga Js Configuration
+bazinga_js_translation:
+    locale_fallback: en
+    default_domain: jsmessages
+    active_locales:
+        - zh
+        - en
+    active_domains:
+        - jsmessages
+
+

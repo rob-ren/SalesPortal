@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new DatabaseBundle\DatabaseBundle(),
             new AppBundle\AppBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle()
         );
 
