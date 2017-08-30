@@ -18,6 +18,9 @@ Canada: Canada
 
 language: en-us,en-us
 js_language: en
+none: N/A
+year_later: years later
+year: years
 
 # Homepage Translation
 homepage:
@@ -116,6 +119,9 @@ single:
   send_message: Send Message
   close: Close
   email_sent_msg: Email Sent Sucessfully.
+  calculator: Investment Calculator
+  price_pre: Offers from
+  price_next: 　
 
 # Explore Page
 explore:
@@ -255,10 +261,13 @@ investment_report:
   bath: Bath
   car_space: Car Space
   study: Study
+  storages: Storages
   internal_area: Internal Area
   balcony_area: External Area
   none: N/A
   view: View
+  mobile_phone: Mobile Phone
+  email: Email Address
   project_profile: Project Profile
   project_descriptions: Project Descriptions
   investment_analysis: Investment Analysis

@@ -59,6 +59,12 @@
                                     {{ project['address'] }}
                                 </div>
                                 <div class="clearfix"></div>
+                                <div class="price">
+                                    <h3 class="price">{% trans %}single.price_pre{% endtrans %}
+                                        ${{ project['min_price']|number_format(0,'.',',') }}
+                                        {% trans %}single.price_next{% endtrans %}
+                                    </h3>
+                                </div>
                                 <ul class="features">
                                     <li><span class="fa fa-moon-o"></span>
                                         <div>{{ project['beds'] }} {% trans %}single.bedrooms{% endtrans %}</div>
@@ -82,6 +88,10 @@
                                 <a data-toggle="modal" href="#contactAgent"
                                    class="btn btn-lg btn-round btn-green contactBtn">
                                     {% trans %}single.contact_agent{% endtrans %}
+                                </a>
+                                <a href="{{ url('app_investment_calculator',{'project_id':project['id']}) }}"
+                                   class="btn btn-lg btn-round btn-green contactBtn">
+                                    {% trans %}single.calculator{% endtrans %}
                                 </a>
                             </div>
                         </div>

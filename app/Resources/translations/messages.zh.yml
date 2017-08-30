@@ -18,6 +18,9 @@ Canada: 加拿大
 
 language: zh-cn,en-us
 js_language: zh
+none: 暂无
+year_later: 年后
+year: 年
 
 # Homepage Translation
 homepage:
@@ -118,6 +121,9 @@ single:
   send_message: 发送消息
   close: 关闭
   email_sent_msg: 邮件已发送成功
+  calculator: 投资计算器
+  price_pre: 价格从
+  price_next: 起
 
 # Explore Page
 explore:
@@ -257,10 +263,13 @@ investment_report:
   bath: 浴室
   car_space: 车位
   study: 书房
+  storages: 储藏室
   internal_area: 室内面积
   balcony_area: 室外面积
   none: 暂无
   view: 房屋朝向
+  mobile_phone: 手机号
+  email: 邮箱地址
   project_profile: 项目摘要
   project_descriptions: 项目介绍
   investment_analysis: 投资分析

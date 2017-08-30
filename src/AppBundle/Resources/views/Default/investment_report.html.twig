@@ -3,8 +3,8 @@
     {% include 'AppBundle:Default:common/header.html.twig' with {'user' : user} %}
 {% endblock %}
 {% block title %}
-    {% if property is defined %}
-        <title>{% trans %}investment_report.investment_report{% endtrans %}- {{ property['lot'] }}
+    {% if project is defined %}
+        <title>{% trans %}investment_report.investment_report{% endtrans %}- {{ project['title'] }}
             , {{ project['address'] }} | {% trans %} international_property_exchange_centre{% endtrans %} </title>
     {% else %}
         <title>{% trans %}investment_report.investment_report{% endtrans %} | {% trans %}
@@ -33,13 +33,12 @@
                             {% endif %}
                         </div>
                         <div class="panel panel-default">
-                            {% if property is defined %}
+                            {% if project is defined %}
                                 <div class="investment-report-header panel-heading"><h3>{{ project['address'] }}
-                                        <span>${{ property['price']|number_format }}</span></h3></div>
+                                        <span>${{ project['min_price']|number_format }}</span></h3></div>
                                 <div class="panel-body">
-
                                     <div class="row">
-                                        {% if shared_user is not null %}
+                                        {% if project is defined %}
                                             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                                                 <table class="table investment-report-table">
                                                     <tr>
@@ -47,64 +46,51 @@
                                                             investment_report.property_details{% endtrans %}</th>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="lot">{% trans %}
-                                                                investment_report.lot{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td><label>{{ property['lot'] }}</label></td>
-                                                        <td><label for="bed">{% trans %}
+                                                        <td><label for="beds">{% trans %}
                                                                 investment_report.bed{% endtrans %}
-                                                                : </label>
+                                                                :</label>
                                                         </td>
-                                                        <td><label>{{ property['bed']?property['bed']:0 }}</label></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="bath">{% trans %}
+                                                        <td><label>{{ project['beds']?project['beds']:0 }}</label></td>
+                                                        <td><label for="baths">{% trans %}
                                                                 investment_report.bath{% endtrans %}
                                                                 : </label>
                                                         </td>
-                                                        <td><label>{{ property['bath']?property['bath']:0 }}</label>
-                                                        </td>
-                                                        <td><label for="car_space">{% trans %}
-                                                                investment_report.car_space{% endtrans %}
-                                                                : </label></td>
-                                                        <td>
-                                                            <label>{{ property['car_space']?property['car_space']:0 }}</label>
+                                                        <td><label>{{ project['baths']?project['baths']:0 }}</label>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="study">{% trans %}
-                                                                investment_report.study{% endtrans %}
+                                                        <td><label for="cars">{% trans %}
+                                                                investment_report.car_space{% endtrans %}
                                                                 : </label></td>
-                                                        <td><label>{{ property['study']?property['study']:0 }}</label>
+                                                        <td>
+                                                            <label>{{ project['cars']?project['cars']|number_format:0 }}</label>
                                                         </td>
+                                                        <td><label for="storages">{% trans %}
+                                                                investment_report.storages{% endtrans %}
+                                                                :</label></td>
+                                                        <td>
+                                                            <label>{{ project['storages']?project['storages']:0 }}</label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><label for="internal_area">{% trans %}
                                                                 investment_report.internal_area{% endtrans %}: </label>
                                                         </td>
                                                         <td><label>
-                                                                {% if property['internal_area'] is null or property['internal_area']== 0 %}
+                                                                {% if project['internal_area'] is null or project['internal_area']== 0 %}
                                                                     {{ 'none'|trans }}
                                                                 {% else %}
-                                                                    {{ property['internal_area'] }}&nbsp;m<sup>2</sup>
+                                                                    {{ project['internal_area'] }}&nbsp;m<sup>2</sup>
                                                                 {% endif %}
                                                             </label></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="view">{% trans %}
-                                                                investment_report.view{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td>
-                                                            <label>{{ property['view']?(property['view'])|trans:'none'|trans }}</label>
-                                                        </td>
                                                         <td><label for="balcony_area">{% trans %}
                                                                 investment_report.balcony_area{% endtrans %}: </label>
                                                         </td>
                                                         <td><label>
-                                                                {% if property['balcony_area'] is null or property['balcony_area']== 0 %}
+                                                                {% if project['external_area'] is null or project['external_area']== 0 %}
                                                                     {{ 'none'|trans }}
                                                                 {% else %}
-                                                                    {{ property['balcony_area'] }}&nbsp;m<sup>2</sup>
+                                                                    {{ project['external_area'] }}&nbsp;m<sup>2</sup>
                                                                 {% endif %}
                                                             </label></td>
                                                     </tr>
@@ -114,21 +100,21 @@
                                                 <div class="agentAvatar">
                                                     <div class="clearfix"></div>
                                                     <img class="avatar agentAvatarImg"
-                                                         src="{{ shared_user['avatar_url'] }}"
+                                                         src="{{ project['account']['avatar_url'] }}"
                                                          alt="avatar">
                                                     <div class="agentName">
-                                                        <span>{{ shared_user['user_type']|trans }}</span>&nbsp;&nbsp;{{ shared_user['first_name'] }}
-                                                        &nbsp;{{ shared_user['last_name'] }}</div>
+                                                        <span>{{ project['account']['user_type']|trans }}</span>&nbsp;&nbsp;{{ project['account']['first_name'] }}
+                                                        &nbsp;{{ project['account']['last_name'] }}</div>
                                                     <div class="title"><strong></strong>
                                                     </div>
                                                     <div class="phone">
-                                                        <strong>{% trans %}contract.mobile_phone{% endtrans %}
-                                                            :</strong>&nbsp;{{ shared_user['mobile_phone']?shared_user['mobile_phone']:'none'|trans }}
+                                                        <strong>{% trans %}investment_report.mobile_phone{% endtrans %}
+                                                            :</strong>&nbsp;{{ project['account']['mobile_phone']?project['account']['mobile_phone']:'none'|trans }}
                                                     </div>
                                                     <div class="email">
-                                                        <strong>{% trans %}contract.email{% endtrans %}
-                                                            :</strong>&nbsp;{{ shared_user['email'] }}
-                                                        <a href="mailto:{{ shared_user['email'] }}"
+                                                        <strong>{% trans %}investment_report.email{% endtrans %}
+                                                            :</strong>&nbsp;{{ project['account']['email'] }}
+                                                        <a href="mailto:{{ project['account']['email'] }}"
                                                            class="btn btn-icon btn-round btn-green btn-sm"><span
                                                                     class="fa fa-envelope-o"></span></a>
                                                     </div>
@@ -769,12 +755,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"> {% trans %}investment_report.refine_assumptions{% endtrans %} </h4>
                 </div>
-                {% if user is not null and property is defined %}
-                    {% set url= url('app_investment_report',{'property_id':property['id']}) %}
+                {% if user is not null and project is defined %}
+                    {% set url= url('app_investment_report',{'project_id':project['id']}) %}
                     {% set method = "post" %}
-                {% elseif property is defined and user is null %}
-                    {% set url= url('app_investment_report_share',{'property_id':property['id']}) %}
-                    {% set method = "get" %}
                 {% else %}
                     {% set url= url('app_investment_report_public') %}
                     {% set method = "post" %}
@@ -785,13 +768,13 @@
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                 <label for="property_price">{% trans %}
                                     investment_calculator.property_price{% endtrans %}&nbsp;($)</label>
-                                {% if property is defined %}
+                                {% if project is defined %}
                                     <input id="price" class="form-control" name="price" type="number"
-                                           value="{{ property['price'] }}"
+                                           value="{{ project['min_price'] }}"
                                            readonly="readonly">
                                     <p class="help-block">{% trans %}
                                         investment_calculator.property_price{% endtrans %}
-                                        ${{ property['price']|number_format }}</p>
+                                        ${{ project['min_price']|number_format }}</p>
                                 {% else %}
                                     <input id="price" type="number" step="0.1" class="rent_weekly form-control"
                                            name="price"
@@ -1026,58 +1009,30 @@
                                             </label>
                                         </td>
                                     </tr>
-                                    {% if property is defined %}
-                                        <tr class="radio custom-radio stamp-duty-calculator">
-                                            <td>
-                                                {% trans %}investment_calculator.stamp_duty{% endtrans %}&nbsp;($)
-                                            </td>
-                                            <td colspan="2">
-                                                <input class="stamp_duty_form form-control" name="stamp_duty"
-                                                       type="number"
-                                                       step="0.1"
-                                                       value={{ property['stamp_duty']?property['stamp_duty']|number_format(0,'.',''): 3000 }} required>
-                                                <a id="stamp_duty_tooltips" class="fa fa-info-circle"
-                                                   data-toggle="tooltip"></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="radio custom-radio stamp-duty-calculator">
-                                            <td>
-                                                {% trans %}investment_calculator.firb_surcharge{% endtrans %}&nbsp;($)
-                                            </td>
-                                            <td colspan="2">
-                                                <input class="stamp_duty_form form-control" name="firb_surcharge"
-                                                       type="number"
-                                                       step="0.1" required readonly>
-                                                <a class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
-                                            </td>
-                                        </tr>
-                                    {% else %}
-                                        <tr class="radio custom-radio stamp-duty-calculator">
-                                            <td>
-                                                {% trans %}investment_calculator.stamp_duty{% endtrans %}&nbsp;($)
-                                            </td>
-                                            <td colspan="2">
-                                                <input class="stamp_duty_form form-control" name="stamp_duty"
-                                                       type="number"
-                                                       step="0.1" value="3000" required>
-                                                <a id="stamp_duty_tooltips" class="fa fa-info-circle"
-                                                   data-toggle="tooltip"></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="radio custom-radio stamp-duty-calculator">
-                                            <td>
-                                                {% trans %}investment_calculator.firb_surcharge{% endtrans %}&nbsp;($)
-                                            </td>
-                                            <td colspan="2">
-                                                <input class="stamp_duty_form form-control" name="firb_surcharge"
-                                                       type="number"
-                                                       step="0.1" required readonly>
-                                                <a class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
-                                            </td>
-                                        </tr>
-                                    {% endif %}
+                                    <tr class="radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.stamp_duty{% endtrans %}&nbsp;($)
+                                        </td>
+                                        <td colspan="2">
+                                            <input class="stamp_duty_form form-control" name="stamp_duty"
+                                                   type="number"
+                                                   step="0.1" value="3000" required>
+                                            <a id="stamp_duty_tooltips" class="fa fa-info-circle"
+                                               data-toggle="tooltip"></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="radio custom-radio stamp-duty-calculator">
+                                        <td>
+                                            {% trans %}investment_calculator.firb_surcharge{% endtrans %}&nbsp;($)
+                                        </td>
+                                        <td colspan="2">
+                                            <input class="stamp_duty_form form-control" name="firb_surcharge"
+                                                   type="number"
+                                                   step="0.1" required readonly>
+                                            <a class="fa fa-info-circle" data-toggle="tooltip"
+                                               title="{% trans %}investment_calculator.firb_surcharge_tooltips{% endtrans %}"></a>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <p class="help-block">{% trans %}
@@ -1129,13 +1084,9 @@
 {% endblock %} {% block javascripts %}
     <script type="text/javascript">
         $('a').tooltip();
-        {% if property is defined %}
-        var price = {{ property['price']|raw }};
-        {% if property['stamp_duty'] %}
-        var vic_stamp_duty = {{ property['stamp_duty']|json_encode|raw }};
-        {% else %}
+        {% if project is defined %}
+        var price = {{ project['min_price']|raw }};
         var vic_stamp_duty = 3000;
-        {% endif %}
         {% else %}
         var price = 400000;
         $('#price').change(function () {

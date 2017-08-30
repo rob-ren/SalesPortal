@@ -54,11 +54,11 @@ app_password_update:
     defaults: { _controller: AppBundle:Profile:updatePassword }
 
 app_investment_calculator:
-    path:    /properties/{property_id}/investment_calculator/new
+    path:    /project/{project_id}/investment_calculator/new
     defaults: {_controller: AppBundle:Calculator:goProjectCalculator}
 
 app_investment_report:
-    path:    /properties/{property_id}/investment_calculator/report
+    path:    /properties/{project_id}/investment_calculator/report
     defaults: {_controller: AppBundle:Calculator:calculateInvestment}
 
 app_investment_calculator_public:
@@ -68,7 +68,3 @@ app_investment_calculator_public:
 app_investment_report_public:
     path:    /investment_calculator/report
     defaults: {_controller: AppBundle:Calculator:calculateInvestmentPublic}
-
-app_investment_report_share:
-    path:    /investment_calculator/{property_id}/share
-    defaults: {_controller: AppBundle:Calculator:calculateInvestment}

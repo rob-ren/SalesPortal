@@ -758,6 +758,7 @@ class Project
         $result ['type'] = $this->type;
         $result ['address'] = $this->address;
         $result ['suburb'] = $this->suburb;
+        $result ['state'] = $this->state;
         $result ['postcode'] = $this->postcode;
         $result ['country'] = $this->country;
         $result ['availability'] = $this->availability;
@@ -771,7 +772,7 @@ class Project
         $result ['beds'] = $this->beds;
         $result ['baths'] = $this->baths;
         $result ['cars'] = $this->cars;
-        $result ['trashed'] = $this->storages;
+        $result ['storages'] = $this->storages;
         $result ['internal_area'] = $this->internal_area;
         $result ['external_area'] = $this->external_area;
         $result ['land'] = $this->land;

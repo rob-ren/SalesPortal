@@ -75,6 +75,9 @@ class CalculatorController extends Controller
         return $this->get("project_meta_business");
     }
 
+    /**
+     * @return Response
+     */
     public function calculateInvestmentPublicAction()
     {
         // get value from request
@@ -117,33 +120,12 @@ class CalculatorController extends Controller
      * @param $property_id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function calculateInvestmentAction($property_id)
+    public function calculateInvestmentAction($project_id)
     {
         // get value from request
-        $user_id = $this->getRequest()->get("user_id") ? $this->getRequest()->get("user_id") : null;
-        $shared_user = null;
-        $converter = new ArrayConverter ();
-        if ($user_id != null) {
-            $shared_user = $this->getAccountBM()->loadById($user_id) ? $this->getAccountBM()->loadById($user_id) : null;
-            $shared_user = $shared_user != null ? $shared_user->convertToArray() : null;
-        }
         $account = $this->getUser() ? $this->getUser() : null;
-        $property = $this->getPropertyBM()->loadById($property_id);
-        $project = $property->getProject();
-        $project_in_array = $converter->ProjectToArray($project);
-        // convert project to array
-        $project_converter_event = new ProjectConverterEvent($project_in_array);
-        $this->get('event_dispatcher')->dispatch("iprex.project.converter", $project_converter_event);
-        $project_array = $project_converter_event->getProject();
-        if (!$project_array ['street_no']) {
-            $project_array ["address"] = $project_array ['street_name'] . ", " . $project_array ['suburb']['name'] . ", " . $project_array ['state']['name'] . ", " . $project_array ['country']['name'];
-        } else {
-            $project_array ["address"] = $project_array ['street_no'] . " " . $project_array ['street_name'] . ", " . $project_array ['suburb']['name'] . ", " . $project_array ['state']['name'] . ", " . $project_array ['country']['name'];
-        }
-        $address_url = str_replace(' ', '-', $project_array ['address']);
-        $address_url = str_replace(',', '', $address_url);
-        $project_array ['address_url'] = $address_url;
-        $project_array ['front_image'] = $project_array ['front_image'] ? $project_array ['front_image'] : '/image/system/default.jpg';
+        $project_bm = $this->getProjectBusinessModel();
+        $project = $project_bm->loadById($project_id);
 
         $loan_percentage = $this->getRequest()->get("loan_percentage") ? $this->getRequest()->get("loan_percentage") : 50;
         $loan_interest_rate = $this->getRequest()->get("loan_interest_rate") ? $this->getRequest()->get("loan_interest_rate") : 4.5;
@@ -159,10 +141,10 @@ class CalculatorController extends Controller
         $first_home = $this->getRequest()->get("first_home") ? $this->getRequest()->get("first_home") : 'no';
         $state = $this->getRequest()->get("state") ? $this->getRequest()->get("state") : '';
         $water_rate = $this->getRequest()->get("water_rate") ? $this->getRequest()->get("water_rate") : 700;
-        $rent_weekly = $this->getRequest()->get("rent_weekly") ? $this->getRequest()->get("rent_weekly") : $property->getPrice() * 0.05 / 52;
+        $rent_weekly = $this->getRequest()->get("rent_weekly") ? $this->getRequest()->get("rent_weekly") : $project->getMinPrice() * 0.05 / 52;
         $annual_growth_rate = $this->getRequest()->get("annual_growth_rate") ? $this->getRequest()->get("annual_growth_rate") : 7;
 
-        $result = $this->investmentCalculator($property->getPrice(), $loan_percentage, $loan_interest_rate, $year, $body_corp, $legal_fee, $accounting_fee, $council_rate, $stamp_duty, $firb_surcharge, $water_rate, $rent_weekly, $annual_growth_rate);
+        $result = $this->investmentCalculator($project->getMinPrice(), $loan_percentage, $loan_interest_rate, $year, $body_corp, $legal_fee, $accounting_fee, $council_rate, $stamp_duty, $firb_surcharge, $water_rate, $rent_weekly, $annual_growth_rate);
         $result ['client_type'] = $client_type;
         $result ['first_home'] = $first_home;
         $result ['firb_surcharge'] = $firb_surcharge;
@@ -171,29 +153,11 @@ class CalculatorController extends Controller
 
         if ($account != null) {
             $account = $account->convertToArray();
-            $shared_user = $account;
-            // store report input parameters
-            $report = new Report();
-            $report->setPropertyPrice($property->getPrice());
-            $report->setLoanPercentage($loan_percentage);
-            $report->setLoanInterestRate($loan_interest_rate);
-            $report->setYear($year);
-            $report->setBodyCorp($body_corp);
-            $report->setLegalFee($legal_fee);
-            $report->setAccountingFee($accounting_fee);
-            $report->setCouncilRate($council_rate);
-            $report->setStampDuty($stamp_duty);
-            $report->setWaterRate($water_rate);
-            $report->setRentIncomeWeekly($rent_weekly);
-            $report->setAnnualGrowthRate($annual_growth_rate);
-            $this->getReportBM()->newReport($report);
         }
-        return $this->render('GifangFrontendBundle:Front:investment_report.html.twig', array(
+        return $this->render('AppBundle:Default:investment_report.html.twig', array(
             'user' => $account,
-            'shared_user' => $shared_user,
             'investment_result' => $result,
-            'property' => $property->convertToArray(),
-            'project' => $project_array
+            'project' => $project->convertToArray()
         ));
     }
 

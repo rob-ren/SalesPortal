@@ -286,4 +286,21 @@
 
     $('input, textarea').placeholder();
 
+    setTimeout(function () {
+        $('body').removeClass('notransition');
+
+//        if ($('#home-map').length > 0) {
+//            map = new google.maps.Map(document.getElementById('home-map'), options);
+//            var styledMapType = new google.maps.StyledMapType(styles, {
+//                name : 'Styled'
+//            });
+//
+//            map.mapTypes.set('Styled', styledMapType);
+//            map.setCenter(new google.maps.LatLng(40.6984237,-73.9890044));
+//            map.setZoom(14);
+//
+//            addMarkers(props, map);
+//        }
+    }, 300);
+
 })(jQuery);
