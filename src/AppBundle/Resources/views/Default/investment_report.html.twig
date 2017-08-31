@@ -26,8 +26,8 @@
                             <a class="btn btn-green link-btn hidden-print" data-toggle="modal"
                                data-target="#myModal">{% trans %}
                                 investment_report.refine_assumptions{% endtrans %}</a>
-                            {% if user is not null and property is defined %}
-                                <a href="/projects/{{ project["address_url"] }}/{{ project["id"] }}"
+                            {% if user is not null and project is defined %}
+                                <a href="{{ path('app_single',{'project_id':project['id']}) }}"
                                    class="btn btn-green link-btn">{% trans %}
                                     investment_report.return_project{% endtrans %}</a>
                             {% endif %}
@@ -38,160 +38,87 @@
                                         <span>${{ project['min_price']|number_format }}</span></h3></div>
                                 <div class="panel-body">
                                     <div class="row">
-                                        {% if project is defined %}
-                                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                                                <table class="table investment-report-table">
-                                                    <tr>
-                                                        <th colspan="4">{% trans %}
-                                                            investment_report.property_details{% endtrans %}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="beds">{% trans %}
-                                                                investment_report.bed{% endtrans %}
-                                                                :</label>
-                                                        </td>
-                                                        <td><label>{{ project['beds']?project['beds']:0 }}</label></td>
-                                                        <td><label for="baths">{% trans %}
-                                                                investment_report.bath{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td><label>{{ project['baths']?project['baths']:0 }}</label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="cars">{% trans %}
-                                                                investment_report.car_space{% endtrans %}
-                                                                : </label></td>
-                                                        <td>
-                                                            <label>{{ project['cars']?project['cars']|number_format:0 }}</label>
-                                                        </td>
-                                                        <td><label for="storages">{% trans %}
-                                                                investment_report.storages{% endtrans %}
-                                                                :</label></td>
-                                                        <td>
-                                                            <label>{{ project['storages']?project['storages']:0 }}</label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="internal_area">{% trans %}
-                                                                investment_report.internal_area{% endtrans %}: </label>
-                                                        </td>
-                                                        <td><label>
-                                                                {% if project['internal_area'] is null or project['internal_area']== 0 %}
-                                                                    {{ 'none'|trans }}
-                                                                {% else %}
-                                                                    {{ project['internal_area'] }}&nbsp;m<sup>2</sup>
-                                                                {% endif %}
-                                                            </label></td>
-                                                        <td><label for="balcony_area">{% trans %}
-                                                                investment_report.balcony_area{% endtrans %}: </label>
-                                                        </td>
-                                                        <td><label>
-                                                                {% if project['external_area'] is null or project['external_area']== 0 %}
-                                                                    {{ 'none'|trans }}
-                                                                {% else %}
-                                                                    {{ project['external_area'] }}&nbsp;m<sup>2</sup>
-                                                                {% endif %}
-                                                            </label></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                <div class="agentAvatar">
-                                                    <div class="clearfix"></div>
-                                                    <img class="avatar agentAvatarImg"
-                                                         src="{{ project['account']['avatar_url'] }}"
-                                                         alt="avatar">
-                                                    <div class="agentName">
-                                                        <span>{{ project['account']['user_type']|trans }}</span>&nbsp;&nbsp;{{ project['account']['first_name'] }}
-                                                        &nbsp;{{ project['account']['last_name'] }}</div>
-                                                    <div class="title"><strong></strong>
-                                                    </div>
-                                                    <div class="phone">
-                                                        <strong>{% trans %}investment_report.mobile_phone{% endtrans %}
-                                                            :</strong>&nbsp;{{ project['account']['mobile_phone']?project['account']['mobile_phone']:'none'|trans }}
-                                                    </div>
-                                                    <div class="email">
-                                                        <strong>{% trans %}investment_report.email{% endtrans %}
-                                                            :</strong>&nbsp;{{ project['account']['email'] }}
-                                                        <a href="mailto:{{ project['account']['email'] }}"
-                                                           class="btn btn-icon btn-round btn-green btn-sm"><span
-                                                                    class="fa fa-envelope-o"></span></a>
-                                                    </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                            <table class="table investment-report-table">
+                                                <tr>
+                                                    <th colspan="4">{% trans %}
+                                                        investment_report.property_details{% endtrans %}</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="beds">{% trans %}
+                                                            investment_report.bed{% endtrans %}
+                                                            :</label>
+                                                    </td>
+                                                    <td><label>{{ project['beds']?project['beds']:0 }}</label></td>
+                                                    <td><label for="baths">{% trans %}
+                                                            investment_report.bath{% endtrans %}
+                                                            : </label>
+                                                    </td>
+                                                    <td><label>{{ project['baths']?project['baths']:0 }}</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="cars">{% trans %}
+                                                            investment_report.car_space{% endtrans %}
+                                                            : </label></td>
+                                                    <td>
+                                                        <label>{{ project['cars']?project['cars']|number_format:0 }}</label>
+                                                    </td>
+                                                    <td><label for="storages">{% trans %}
+                                                            investment_report.storages{% endtrans %}
+                                                            :</label></td>
+                                                    <td>
+                                                        <label>{{ project['storages']?project['storages']:0 }}</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="internal_area">{% trans %}
+                                                            investment_report.internal_area{% endtrans %}: </label>
+                                                    </td>
+                                                    <td><label>
+                                                            {% if project['internal_area'] is null or project['internal_area']== 0 %}
+                                                                {{ 'none'|trans }}
+                                                            {% else %}
+                                                                {{ project['internal_area'] }}&nbsp;m<sup>2</sup>
+                                                            {% endif %}
+                                                        </label></td>
+                                                    <td><label for="balcony_area">{% trans %}
+                                                            investment_report.balcony_area{% endtrans %}: </label>
+                                                    </td>
+                                                    <td><label>
+                                                            {% if project['external_area'] is null or project['external_area']== 0 %}
+                                                                {{ 'none'|trans }}
+                                                            {% else %}
+                                                                {{ project['external_area'] }}&nbsp;m<sup>2</sup>
+                                                            {% endif %}
+                                                        </label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="agentAvatar">
+                                                <div class="clearfix"></div>
+                                                <img class="avatar agentAvatarImg"
+                                                     src="{{ project['account']['avatar_url'] }}"
+                                                     alt="avatar">
+                                                <div class="agentName">
+                                                    <span>{{ project['account']['user_type']|trans }}</span>&nbsp;&nbsp;{{ project['account']['first_name'] }}
+                                                    &nbsp;{{ project['account']['last_name'] }}</div>
+                                                <div class="title"><strong></strong>
+                                                </div>
+                                                <div class="phone">
+                                                    <strong>{% trans %}investment_report.mobile_phone{% endtrans %}
+                                                        :</strong>&nbsp;{{ project['account']['mobile_phone']?project['account']['mobile_phone']:'none'|trans }}
+                                                </div>
+                                                <div class="email">
+                                                    <strong>{% trans %}investment_report.email{% endtrans %}
+                                                        :</strong>&nbsp;{{ project['account']['email'] }}
+                                                    <a href="mailto:{{ project['account']['email'] }}"
+                                                       class="btn btn-icon btn-round btn-green btn-sm"><span
+                                                                class="fa fa-envelope-o"></span></a>
                                                 </div>
                                             </div>
-                                        {% else %}
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <table class="table investment-report-table">
-                                                    <tr>
-                                                        <th colspan="4">{% trans %}
-                                                            investment_report.property_details{% endtrans %}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="lot">{% trans %}
-                                                                investment_report.lot{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td><label>{{ property['lot'] }}</label></td>
-                                                        <td><label for="bed">{% trans %}
-                                                                investment_report.bed{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td><label>{{ property['bed']?property['bed']:0 }}</label></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="bath">{% trans %}
-                                                                investment_report.bath{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td><label>{{ property['bath']?property['bath']:0 }}</label>
-                                                        </td>
-                                                        <td><label for="car_space">{% trans %}
-                                                                investment_report.car_space{% endtrans %}
-                                                                : </label></td>
-                                                        <td>
-                                                            <label>{{ property['car_space']?property['car_space']:0 }}</label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="study">{% trans %}
-                                                                investment_report.study{% endtrans %}
-                                                                : </label></td>
-                                                        <td><label>{{ property['study']?property['study']:0 }}</label>
-                                                        </td>
-                                                        <td><label for="internal_area">{% trans %}
-                                                                investment_report.internal_area{% endtrans %}: </label>
-                                                        </td>
-                                                        <td><label>
-                                                                {% if property['internal_area'] is null or property['internal_area']== 0 %}
-                                                                    {{ 'none'|trans }}
-                                                                {% else %}
-                                                                    {{ property['internal_area'] }}&nbsp;m<sup>2</sup>
-                                                                {% endif %}
-                                                            </label></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label for="view">{% trans %}
-                                                                investment_report.view{% endtrans %}
-                                                                : </label>
-                                                        </td>
-                                                        <td>
-                                                            <label>{{ property['view']?(property['view'])|trans:'none'|trans }}</label>
-                                                        </td>
-                                                        <td><label for="balcony_area">{% trans %}
-                                                                investment_report.balcony_area{% endtrans %}: </label>
-                                                        </td>
-                                                        <td><label>
-                                                                {% if property['balcony_area'] is null or property['balcony_area']== 0 %}
-                                                                    {{ 'none'|trans }}
-                                                                {% else %}
-                                                                    {{ property['balcony_area'] }}&nbsp;m<sup>2</sup>
-                                                                {% endif %}
-                                                            </label></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="panel-heading investment-report-header"><h3>{% trans %}

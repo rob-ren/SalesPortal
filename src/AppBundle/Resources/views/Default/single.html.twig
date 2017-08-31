@@ -28,22 +28,30 @@
                         {% endif %}
                     </ol>
                     <div class="carousel-inner">
-                        <div class="item active ">
-                            <img src="../{{ images[0]["meta_value"] }}">
-                            <div class="container">
-                                <div class="carousel-caption">
-                                </div>
-                            </div>
-                        </div>
-                        {% for i in 1..images|length-1 %}
-                            <div class="item ">
-                                <img src="../{{ images[i]["meta_value"] }}">
+                        {% if images|length >1 %}
+                            <div class="item active ">
+                                <img src="../{{ images[0]["meta_value"] }}">
                                 <div class="container">
                                     <div class="carousel-caption">
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
+                            {% for i in 1..images|length-1 %}
+                                <div class="item ">
+                                    <img src="../{{ images[i]["meta_value"] }}">
+                                    <div class="container">
+                                        <div class="carousel-caption">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <img src="../{{ images[0]["meta_value"] }}">
+                            <div class="container">
+                                <div class="carousel-caption">
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <a class="left carousel-control" href="#carouselFull" role="button" data-slide="prev"><span
                                 class="fa fa-chevron-left"></span></a>
@@ -70,7 +78,7 @@
                                         <div>{{ project['beds'] }} {% trans %}single.bedrooms{% endtrans %}</div>
                                     </li>
                                     <li><span class="icon-drop"></span>
-                                        <div>{{ project['baths'] }} {% trans %}single.bathrooms{% endtrans %}</div>
+                                        <div>{{ project['baths']|number_format }} {% trans %}single.bathrooms{% endtrans %}</div>
                                     </li>
                                     <li><span class="icon-frame"></span>
                                         <div>{{ project['land'] }} {% trans %}single.sq_m{% endtrans %}</div>

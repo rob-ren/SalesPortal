@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Exceptions\PasswordNotSameException;
 use DatabaseBundle\Business\AccountBusinessModel;
+use DatabaseBundle\Business\ProjectSearchBusinessModel;
 use DatabaseBundle\Common\StringHelper;
 use DatabaseBundle\Entity\Account;
 use DatabaseBundle\Enum\AccountType;
@@ -25,11 +26,12 @@ class IndexController extends Controller
         if ($account != null) {
             $account = $account->convertToArray();
         }
+        // get ad projects
+        $recent_projects = $this->getRecentProjects(8) ? $this->getRecentProjects(8) : null;
 
         return $this->render('AppBundle:Default:index.html.twig', array(
             'user' => $account,
-            'types' => StringHelper::EnumToArray("DatabaseBundle\Enum\ProjectType"),
-            'states' => StringHelper::EnumToArray("DatabaseBundle\Enum\StateType"),
+            'recent_projects' => $recent_projects
         ));
     }
 
@@ -82,6 +84,20 @@ class IndexController extends Controller
     }
 
     /**
+     * get recent projects by input number
+     */
+    public function getRecentProjects($number)
+    {
+        $project_search_bm = $this->getProjectSearchBusinessModel();
+        $recent_projects = $project_search_bm->find(array(), 8);
+        $projects_array = array();
+        foreach ($recent_projects as $recent_project) {
+            $projects_array[] = $recent_project->convertToArray();
+        }
+        return $projects_array;
+    }
+
+    /**
      * @Route("/login", name="login_route")
      */
     public function loginAction()
@@ -123,5 +139,15 @@ class IndexController extends Controller
     public function getAccountBusinessModel()
     {
         return $this->get("account_business");
+    }
+
+    /**
+     * get project search business model
+     *
+     * @return ProjectSearchBusinessModel
+     */
+    public function getProjectSearchBusinessModel()
+    {
+        return $this->get("project_search_business");
     }
 }

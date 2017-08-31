@@ -113,8 +113,9 @@ class AddController extends Controller
         } catch (\Exception $e) {
             return new Response($e->getMessage());
         }
-        return $this->render('AppBundle:Default:index.html.twig', array(
-            'user' => $account
+        return $this->render('AppBundle:Default:add.html.twig', array(
+            'user' => $account,
+            'types' => StringHelper::EnumToArray("DatabaseBundle\Enum\ProjectType")
         ));
     }
 

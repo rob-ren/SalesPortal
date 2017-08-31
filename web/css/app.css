@@ -2930,12 +2930,14 @@ h1.pageTitle {
     width: 100%;
     overflow: hidden;
     position: relative;
+    height: 170px;
 }
 
 .propWidget-2 .fig img {
     width: 100%;
     position: relative;
     display: block;
+    margin: 0 auto;
 }
 
 .propWidget-2 .fig img.blur {
@@ -6500,6 +6502,20 @@ blockquote {
 @media screen and (max-width: 991px) {
     .agentAvatarImg {
         width: 20%;
+    }
+
+    .propWidget-2 .fig {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+    }
+
+    .propWidget-2 .fig img {
+        width: 100%;
+        position: relative;
+        display: block;
+        margin: 0 auto;
     }
 
     .agentAvatar .contactBtn {
